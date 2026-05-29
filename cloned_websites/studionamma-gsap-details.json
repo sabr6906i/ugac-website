@@ -1,0 +1,342 @@
+{
+  "gsapInfo": {
+    "version": "3.15.0",
+    "globalTimeline": "27 tweens/timelines at root",
+    "scrollTriggers": [
+      {
+        "trigger": "DIV.latest_content_item.w-dyn-item",
+        "start": 2556,
+        "end": 3644,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.latest_content_item.w-dyn-item",
+        "start": 2556,
+        "end": 3644,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.latest_content_item.w-dyn-item",
+        "start": 3063,
+        "end": 4151,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.latest_content_item.w-dyn-item",
+        "start": 3063,
+        "end": 4151,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "svg.[object.SVGAnimatedString]",
+        "start": 5027,
+        "end": 5744,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-appear.show-mobile-landscape",
+        "start": 1682,
+        "end": 3395,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 5542,
+        "end": 6324,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 5986,
+        "end": 6714,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6008,
+        "end": 6736,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6030,
+        "end": 6758,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6053,
+        "end": 6781,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6075,
+        "end": 6803,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6098,
+        "end": 6826,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6120,
+        "end": 6848,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6168,
+        "end": 6896,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6191,
+        "end": 6919,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6213,
+        "end": 6941,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear",
+        "start": 6236,
+        "end": 6964,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear.is-locales",
+        "start": 6258,
+        "end": 6984,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.mono-appear.is-locales",
+        "start": 6258,
+        "end": 6984,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 5986,
+        "end": 6732,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 6052,
+        "end": 6799,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 6119,
+        "end": 6847,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 6168,
+        "end": 6896,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 6216,
+        "end": 6944,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.text-appear",
+        "start": 6238,
+        "end": 6966,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.heading-appear.gsap-ready",
+        "start": -710,
+        "end": -0.001,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.heading-appear.gsap-ready",
+        "start": -591,
+        "end": 629,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.heading-appear.gsap-ready",
+        "start": 2098,
+        "end": 2978,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.visual_overlay",
+        "start": 103,
+        "end": 1279,
+        "animation": "customElementAppear"
+      },
+      {
+        "trigger": "SPAN.cta_visual",
+        "start": 5544,
+        "end": 6366,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-mono_wrapper",
+        "start": 822,
+        "end": 1549,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-mono_wrapper",
+        "start": 1932,
+        "end": 2659,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-mono_wrapper",
+        "start": 3649,
+        "end": 4377,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-mono_wrapper",
+        "start": 4643,
+        "end": 5371,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.text-mono_wrapper",
+        "start": 5645,
+        "end": 6373,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.small-link_arrow.w-embed",
+        "start": 4636,
+        "end": 5373,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.small-link_arrow.w-embed",
+        "start": 5638,
+        "end": 6375,
+        "animation": "custom"
+      },
+      {
+        "trigger": "DIV.visual_wrapper.grow-appear.is-home-video",
+        "start": 88,
+        "end": 1279,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear.hide-mobile-landscape",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear.hide-mobile-landscape",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.grow-appear.hide-tablet",
+        "start": 5849,
+        "end": 6611,
+        "animation": "latestVisualAppear"
+      },
+      {
+        "trigger": "DIV.simple-appear.hide-mobile-landscape",
+        "start": 920,
+        "end": 2407,
+        "animation": "power4.out"
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 3779,
+        "end": 4597,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 3887,
+        "end": 4704,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 3994,
+        "end": 4812,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 4102,
+        "end": 4919,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 4209,
+        "end": 5027,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 4317,
+        "end": 5134,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.home_services_list-item.line-appear",
+        "start": 4424,
+        "end": 5242,
+        "animation": null
+      },
+      {
+        "trigger": "H2.line-appear",
+        "start": 5242,
+        "end": 6227,
+        "animation": null
+      },
+      {
+        "trigger": "DIV.footer_logo_fill.w-embed",
+        "start": 6368,
+        "end": 6693,
+        "scrub": 0.05,
+        "animation": "none"
+      }
+    ],
+    "easings": []
+  },
+  "lenisInfo": {},
+  "webflowIx": "Webflow IX2 interactions present"
+}

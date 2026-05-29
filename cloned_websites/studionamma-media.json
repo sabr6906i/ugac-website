@@ -1,0 +1,128 @@
+{
+  "videos": [
+    {
+      "src": "https://studionamma.vercel.app/videos/16-9_light-hd.mp4",
+      "poster": "",
+      "class": ""
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985%2F68dfa4ffe42ad829f9d5bd31_Home-Hero-lightV5-transcode.mp4",
+      "poster": "",
+      "class": ""
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985%2F68dfa5030619737bde7460e5_Home-Hero-DK%20ModeV4-transcode.mp4",
+      "poster": "",
+      "class": ""
+    },
+    {
+      "src": "https://studionamma.vercel.app/videos/matera/matera-highlight-2.mp4",
+      "poster": "",
+      "class": "main-video"
+    },
+    {
+      "src": "https://studionamma.vercel.app/videos/chance/chance-cover.mp4",
+      "poster": "",
+      "class": "main-video"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d143844e199c5fe25893c6_Details%201.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d14384921ac39670293bad_Details2.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d14384e95f535d6ce77d4f_Details3.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d14384e6539b091e5c0c8b_Details4.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d14384b8a083b5d518278d_Details5.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d1446a128c7643746e47f9_Playground1.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d1446a83ac058871c1ccfc_Playground2.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d1446a3ce130a222671480_Playground3.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d1446a796dfc08d400d6ea_Playground4.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/679cb9cacf00799ba4b4c985/68d1446a8736b633433d00f9_Playground5.webp",
+      "alt": "",
+      "class": "home_intro_image"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb0be00336912e360b324f_main%20case%20cover%20matera%20(1).webp",
+      "alt": "Matera Visual with their tagline \"le syndic du 21e siècle\"",
+      "class": "latest_visual_background"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bae5b9f22246585fe911d0_chance-cover-desktop.webp",
+      "alt": "Chance Visuals with \"rencontrer l'amour pro\"",
+      "class": "latest_visual_background"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68beb68ead192a24f9ad4372_silvr%20case%20cover%20(1).webp",
+      "alt": "Silvr Tagline \"supercharge business loan\" on a billboard",
+      "class": "latest_visual_background"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb1c497ad001257f2e727f_intramuros-cover-case-home%20(1).webp",
+      "alt": "Intramuros magazine held by a man",
+      "class": "latest_visual_background"
+    },
+    {
+      "src": "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/d8c3ace0-ba4a-4b2a-b7bd-5e7325a8a381/gabriel-2025-square-4x.png",
+      "alt": "Gabriel (Studio Namma)",
+      "class": "Avatar__StyledAvatar-sc-1fe28fab-3 hkqFeh es-avatar-image"
+    }
+  ],
+  "projectItems": [
+    {
+      "img": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb0be00336912e360b324f_main%20case%20cover%20matera%20(1).webp",
+      "video": "https://studionamma.vercel.app/videos/matera/matera-highlight-2.mp4"
+    },
+    {
+      "img": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb0be00336912e360b324f_main%20case%20cover%20matera%20(1).webp",
+      "video": "https://studionamma.vercel.app/videos/matera/matera-highlight-2.mp4"
+    },
+    {
+      "img": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bae5b9f22246585fe911d0_chance-cover-desktop.webp",
+      "video": "https://studionamma.vercel.app/videos/chance/chance-cover.mp4"
+    },
+    {
+      "img": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68beb68ead192a24f9ad4372_silvr%20case%20cover%20(1).webp",
+      "video": "https://studionamma.vercel.app/videos/silvr/silvr-highlight.mp4"
+    },
+    {
+      "img": "https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb1c497ad001257f2e727f_intramuros-cover-case-home%20(1).webp",
+      "video": "https://studionamma.vercel.app/videos/intramuros/intramuros-highlight.mp4"
+    }
+  ]
+}

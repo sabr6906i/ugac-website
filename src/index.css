@@ -1,13 +1,82 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #edece8;
+  --bg-card: #e4e3de;
+  --fg: #0d0d0c;
+  --fg-muted: rgba(13,13,12,0.42);
+  --fg-subtle: rgba(13,13,12,0.18);
+  --border: rgba(13,13,12,0.1);
+  --accent-blue: #1a56f0;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --nav-h: 52px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-x: hidden;
+  cursor: none;
 }
+
+body.dark {
+  --bg: #111110;
+  --bg-card: #1c1c1a;
+  --fg: #f0efea;
+  --fg-muted: rgba(240,239,234,0.42);
+  --fg-subtle: rgba(240,239,234,0.16);
+  --border: rgba(240,239,234,0.09);
+}
+
+/* Custom cursor — white + difference blend = dark on light bg, white on dark bg */
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out);
+  mix-blend-mode: difference;
+  will-change: left, top;
+}
+#custom-cursor.big { width: 52px; height: 52px; }
+
+a, button { cursor: none; }
+a { text-decoration: none; color: inherit; }
+button { border: none; background: none; font-family: inherit; color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.75rem;
+}
+
+.s-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+::selection { background: var(--fg); color: var(--bg); }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--fg-subtle); }

@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grids</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Unbounded:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f0efea;
+      --black: #000;
+      --white: #fff;
+      --border: rgba(0,0,0,0.14);
+      --font-ui: 'Space Grotesk', sans-serif;
+      --font-display: 'Unbounded', sans-serif;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--black);
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      overscroll-behavior: none;
+      letter-spacing: -0.01em;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    #cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+      mix-blend-mode: difference;
+    }
+    #cursor.expanded { width: 60px; height: 60px; }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.6rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(240, 239, 234, 0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav-logo .sq {
+      width: 0.7rem;
+      height: 0.7rem;
+      background: #000;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-links .sep { opacity: 0.3; padding: 0 0.1rem; }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 2.4rem;
+    }
+    .nav-toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-toggle-group span { opacity: 0.6; }
+    .toggle-pair { display: flex; gap: 0.2rem; }
+    .tbtn {
+      padding: 0.18rem 0.75rem;
+      border-radius: 999px;
+      border: 1.5px solid #000;
+      background: transparent;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: none;
+      transition: background 0.22s, color 0.22s;
+      letter-spacing: -0.01em;
+    }
+    .tbtn.on { background: #000; color: #fff; }
+
+    .nav-copy { opacity: 0.5; font-size: 0.8rem; }
+
+    /* Grid overlay */
+    #grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8999;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      padding: 0 1.6rem;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    #grid-overlay.show { opacity: 1; }
+    .gcol {
+      border-left: 1px solid rgba(255, 0, 0, 0.2);
+      height: 100%;
+    }
+    .gcol:last-child { border-right: 1px solid rgba(255, 0, 0, 0.2); }
+
+    /* Scroll container */
+    #spacer { display: block; width: 1px; visibility: hidden; pointer-events: none; }
+    #wrap {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #content {
+      will-change: transform;
+    }
+    #content { position: relative; }
+
+    /* ─── HERO SECTIONS ─── */
+    .h-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0 1.6rem;
+    }
+
+    /* Individual big letters */
+    .big-letter {
+      font-family: var(--font-display);
+      font-weight: 900;
+      line-height: 0.86;
+      color: #000;
+      display: block;
+      will-change: transform;
+      user-select: none;
+    }
+
+    /* Black filled rectangles */
+    .blk {
+      background: #000;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Thin horizontal rule */
+    .hr { border: none; border-top: 1px solid var(--border); }
+
+    /* Section labels (vertical, sidebar) */
+    .v-label {
+      position: absolute;
+      font-size: 0.7rem;
+      opacity: 0.4;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* ─── GRID INTRO ─── */
+    .intro-meta {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.6rem;
+      padding: 3rem 1.6rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .intro-label {
+      grid-column: 1 / 3;
+      font-size: 0.78rem;
+      opacity: 0.5;
+      line-height: 1.6;
+    }
+    .intro-desc {
+      grid-column: 3 / 9;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+    .intro-num {
+      grid-column: 10 / 13;
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 900;
+      text-align: right;
+      opacity: 0.08;
+      line-height: 1;
+    }
+
+    /* ─── SCROLL DOWN hint ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 1.6rem;
+      font-size: 0.78rem;
+      opacity: 0.4;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .scroll-hint::after {
+      content: '¬';
+      transform: rotate(-90deg);
+      display: inline-block;
+    }
+
+    /* ─── GRID TYPE SECTIONS ─── */
+    .gs {
+      padding: 5rem 1.6rem 4rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .gs-header {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.6rem;
+      margin-bottom: 3.5rem;
+      align-items: end;
+    }
+    .gs-num {
+      grid-column: 1;
+      font-size: 0.78rem;
+      opacity: 0.4;
+      padding-bottom: 0.3rem;
+    }
+    .gs-title {
+      grid-column: 2 / 9;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(38px, 7.5vw, 110px);
+      line-height: 0.88;
+      letter-spacing: -0.04em;
+    }
+    .gs-about-label {
+      grid-column: 9;
+      font-size: 0.72rem;
+      opacity: 0.4;
+      padding-bottom: 0.3rem;
+    }
+    .gs-about-text {
+      grid-column: 10 / 13;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    /* Spec rows */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+    }
+    .spec-cell {
+      background: var(--bg);
+      padding: 1.4rem 1.6rem;
+    }
+    .spec-cell-label {
+      font-size: 0.7rem;
+      opacity: 0.45;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 0.5rem;
+    }
+    .spec-cell-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .spec-cell-tag {
+      display: inline-block;
+      margin-top: 0.6rem;
+      padding: 0.12rem 0.6rem;
+      border: 1px solid #000;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Mock screen */
+    .mock-screen {
+      background: #dddcd7;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .mock-label {
+      position: absolute;
+      top: 1rem; left: 1.2rem;
+      font-size: 0.65rem;
+      opacity: 0.5;
+      letter-spacing: 0.05em;
+    }
+    .mock-res {
+      position: absolute;
+      bottom: 1rem; left: 1.2rem;
+      font-size: 0.65rem;
+      opacity: 0.4;
+    }
+    .mock-cols {
+      position: absolute;
+      inset: 2.5rem 1.2rem 1.2rem;
+      display: grid;
+      gap: 0;
+    }
+    .mock-col-line {
+      border-left: 1px solid rgba(0,0,0,0.25);
+      height: 100%;
+    }
+    .mock-col-line:last-child { border-right: 1px solid rgba(0,0,0,0.25); }
+
+    /* Steps */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+    .step-cell {
+      background: var(--bg);
+      padding: 2rem 1.6rem;
+    }
+    .step-num { font-size: 0.72rem; opacity: 0.38; margin-bottom: 0.6rem; }
+    .step-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .step-desc { font-size: 0.82rem; opacity: 0.55; line-height: 1.5; }
+
+    /* Notes box */
+    .notes-box {
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      margin: 2rem 0;
+      max-width: 52rem;
+    }
+    .notes-label { font-size: 0.68rem; opacity: 0.35; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    .notes-text { font-size: 0.85rem; line-height: 1.75; }
+    .notes-text em { font-style: normal; text-decoration: underline; }
+
+    /* Project examples */
+    .project-row {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.6rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      align-items: center;
+    }
+    .proj-name {
+      grid-column: 1 / 7;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .proj-agency {
+      grid-column: 7 / 10;
+      font-size: 0.8rem;
+      opacity: 0.45;
+    }
+    .proj-num {
+      grid-column: 11 / 13;
+      font-size: 0.8rem;
+      opacity: 0.35;
+      text-align: right;
+    }
+
+    /* ─── CLOSING ─── */
+    .closing {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 1.6rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .closing-text {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(60px, 13vw, 210px);
+      line-height: 0.84;
+      letter-spacing: -0.04em;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.8rem 1.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      opacity: 0.5;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* Crazy mode */
+    body.crazy { filter: invert(1) hue-rotate(180deg); }
+    body.crazy nav { filter: invert(1) hue-rotate(180deg); }
+    body.crazy #grid-overlay { opacity: 1 !important; }
+
+    /* Number nav on right side */
+    #section-nav {
+      position: fixed;
+      right: 1.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 8998;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .snav-item {
+      font-size: 0.7rem;
+      opacity: 0.3;
+      writing-mode: vertical-rl;
+      cursor: none;
+      transition: opacity 0.3s;
+      letter-spacing: 0.06em;
+    }
+    .snav-item.active { opacity: 1; }
+    .snav-item:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+
+<!-- Navigation -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <span class="sq"></span>
+    <span>GRIDS</span>
+  </a>
+  <div class="nav-links">
+    <a href="#" id="nl-intro">Intro</a>
+    <span class="sep"> / </span>
+    <a href="#" id="nl-grids" class="active">Grids</a>
+    <span class="sep"> / </span>
+    <a href="#" id="nl-books">Books</a>
+  </div>
+  <div class="nav-controls">
+    <div class="nav-toggle-group">
+      <span>Grid:</span>
+      <div class="toggle-pair">
+        <button class="tbtn" id="grid-on" onclick="setGrid(true)">On</button>
+        <button class="tbtn on" id="grid-off" onclick="setGrid(false)">Off</button>
+      </div>
+    </div>
+    <div class="nav-toggle-group">
+      <span>Crazy Mode:</span>
+      <div class="toggle-pair">
+        <button class="tbtn" id="crazy-on" onclick="setCrazy(true)">On</button>
+        <button class="tbtn on" id="crazy-off" onclick="setCrazy(false)">Off</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-copy">Obys Agency ©2021</div>
+</nav>
+
+<!-- Grid overlay (12 columns, red tint) -->
+<div id="grid-overlay">
+  <div class="gcol"></div><div class="gcol"></div><div class="gcol"></div>
+  <div class="gcol"></div><div class="gcol"></div><div class="gcol"></div>
+  <div class="gcol"></div><div class="gcol"></div><div class="gcol"></div>
+  <div class="gcol"></div><div class="gcol"></div><div class="gcol"></div>
+</div>
+
+<!-- Section side nav -->
+<div id="section-nav">
+  <div class="snav-item active" data-target="sec-columns">Columns</div>
+  <div class="snav-item" data-target="sec-vandeg">Van De Graaf</div>
+  <div class="snav-item" data-target="sec-rect">Rectangular</div>
+  <div class="snav-item" data-target="sec-others">Others</div>
+</div>
+
+<!-- Scroll spacer (height set by JS) -->
+<div id="spacer"></div>
+
+<!-- Main scroll container -->
+<div id="wrap">
+<div id="content">
+
+  <!-- ── HERO BLOCK 1: intro rows ── -->
+  <div style="padding-top:3.5rem">
+    <!-- Row 1: G + large empty + GRIDS big title -->
+    <div class="h-row" style="height:100vh; gap:0; padding:0 1.6rem; border-bottom:1px solid var(--border);">
+
+      <!-- Left: info text -->
+      <div style="width:20%; padding-top:6rem; align-self:flex-start;">
+        <div style="font-size:0.78rem; opacity:0.5; margin-bottom:0.5rem; line-height:1.5;">
+          This website is a part of Obys educational projects.<br>
+          This time we show our principles of the grids using.
+        </div>
+        <div style="margin-top:1.5rem; font-size:0.72rem; opacity:0.35; text-transform:uppercase; letter-spacing:0.1em;">4 types of grids</div>
+      </div>
+
+      <!-- Right: GRIDS massive -->
+      <div style="flex:1; display:flex; align-items:flex-end; padding-bottom:2rem; position:relative;">
+        <!-- black square + GRIDS text -->
+        <div style="display:flex; align-items:flex-end; gap:0; width:100%;">
+          <div class="blk" id="hero-sq" style="width:22%; height:48vh;"></div>
+          <div class="big-letter" id="hero-grids" style="font-size:clamp(80px,22vw,340px); margin-left:-0.02em; flex:1;">GRIDS</div>
+        </div>
+        <div class="scroll-hint">Scroll down</div>
+      </div>
+    </div>
+
+    <!-- Row 2: "ARE JUST" — big rotated letters -->
+    <div class="h-row" style="height:120vh; flex-direction:column; justify-content:center; gap:0; padding:4rem 1.6rem; position:relative; overflow:hidden;">
+      <div style="display:flex; align-items:center; gap:1rem; overflow:hidden;">
+        <span class="big-letter" id="l-g" style="font-size:clamp(120px,28vw,440px); transform:rotate(-8deg) translateX(-5vw);">G</span>
+        <span class="big-letter" id="l-r" style="font-size:clamp(120px,28vw,440px); transform:rotate(12deg) translateX(3vw);">R</span>
+        <span class="big-letter" id="l-i" style="font-size:clamp(90px,18vw,280px);">I</span>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:flex-end; gap:1rem; overflow:hidden; margin-top:-3rem;">
+        <span class="big-letter" id="l-d" style="font-size:clamp(120px,28vw,440px); transform:rotate(-5deg);">D</span>
+        <div class="blk" style="width:clamp(60px,12vw,180px); height:clamp(60px,12vw,180px);"></div>
+        <span class="big-letter" id="l-s" style="font-size:clamp(120px,28vw,440px); transform:rotate(8deg);">S</span>
+      </div>
+      <div style="position:absolute; bottom:3rem; left:1.6rem; font-size:clamp(60px,14vw,220px); font-family:var(--font-display); font-weight:900; opacity:0.06; line-height:1;">ARE</div>
+    </div>
+
+    <!-- Row 3: "JUST" -->
+    <div class="h-row" style="height:100vh; justify-content:center; gap:2vw; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; gap:0; width:100%; align-items:center; position:relative;">
+        <div style="display:flex; align-items:center; width:100%; padding:0 2rem; justify-content:space-between; overflow:hidden;">
+          <span class="big-letter" id="l-j" style="font-size:clamp(100px,24vw,380px); transform:translateX(-2vw);">J</span>
+          <div class="blk" style="width:36%; height:50vh;"></div>
+        </div>
+        <div style="display:flex; align-items:center; width:100%; padding:0 2rem; overflow:hidden;">
+          <span class="big-letter" id="l-u" style="font-size:clamp(100px,24vw,380px); margin-left:auto; transform:rotate(6deg);">U</span>
+        </div>
+        <div class="v-label" style="right:3.5rem; top:50%;">Others</div>
+      </div>
+    </div>
+
+    <!-- Row 4: "WONDERFUL" -->
+    <div class="h-row" style="height:130vh; flex-direction:column; justify-content:center; gap:0; border-top:1px solid var(--border); overflow:hidden;">
+      <div style="display:flex; align-items:flex-end; gap:1rem; width:100%;">
+        <div class="blk" style="width:48%; height:55vh; flex-shrink:0;"></div>
+        <div>
+          <span class="big-letter" id="l-t" style="font-size:clamp(100px,24vw,380px); display:block; transform:rotate(-4deg);">T</span>
+          <span class="big-letter" id="l-oo" style="font-size:clamp(80px,18vw,290px); display:block; transform:rotate(10deg);">O</span>
+        </div>
+        <span class="big-letter" id="l-ol" style="font-size:clamp(100px,24vw,380px); transform:rotate(-9deg) translateY(10%);">L</span>
+      </div>
+      <div style="padding:2rem 0 0; font-size:clamp(60px,14vw,210px); font-family:var(--font-display); font-weight:900; opacity:0.05; line-height:1; text-align:right;">WONDERFUL</div>
+    </div>
+
+    <!-- Row 5: "TOOLS" reveal + intro text -->
+    <div class="h-row" style="height:100vh; justify-content:space-between; align-items:center; border-top:1px solid var(--border); gap:3rem;">
+      <div style="width:55%;">
+        <div class="big-letter reveal" style="font-size:clamp(70px,18vw,260px);">TOOLS</div>
+      </div>
+      <div style="width:35%; font-size:0.88rem; line-height:1.7; opacity:0.7;" class="reveal">
+        <p>... but these tools are used to help you create better designs. Grids are a foundation—not a constraint.</p>
+      </div>
+    </div>
+
+    <!-- ── INTRO META ── -->
+    <div class="intro-meta reveal">
+      <div class="intro-label">4 types of grids</div>
+      <div class="intro-desc">
+        This website is a part of Obys educational projects. This time we show our principles of the grids using.
+        We work with columns, Van De Graaf canon, rectangular, and other systems every day.
+      </div>
+      <div class="intro-num">04</div>
+    </div>
+
+    <!-- ── TYPES NAV ── -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border-bottom:1px solid var(--border);">
+      <div style="background:var(--bg); padding:2rem 1.6rem;">
+        <div style="font-size:0.68rem; opacity:0.4; margin-bottom:0.4rem;">01</div>
+        <div style="font-weight:700; font-size:1rem;">Columns</div>
+      </div>
+      <div style="background:var(--bg); padding:2rem 1.6rem;">
+        <div style="font-size:0.68rem; opacity:0.4; margin-bottom:0.4rem;">02</div>
+        <div style="font-weight:700; font-size:1rem;">Van De Graaf</div>
+      </div>
+      <div style="background:var(--bg); padding:2rem 1.6rem;">
+        <div style="font-size:0.68rem; opacity:0.4; margin-bottom:0.4rem;">03</div>
+        <div style="font-weight:700; font-size:1rem;">Rectangular</div>
+      </div>
+      <div style="background:var(--bg); padding:2rem 1.6rem;">
+        <div style="font-size:0.68rem; opacity:0.4; margin-bottom:0.4rem;">04</div>
+        <div style="font-weight:700; font-size:1rem;">Others</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 01: COLUMNS
+    ══════════════════════════════════════ -->
+    <div class="gs" id="sec-columns">
+      <div class="gs-header reveal">
+        <div class="gs-num">01</div>
+        <div class="gs-title">COLUMNS</div>
+        <div class="gs-about-label">(About grid)</div>
+        <div class="gs-about-text">
+          This type of grid is used most of all at Obys agency.
+          We try to combine this one with the paddings system or to use it with the typographic grid based on the line height.
+        </div>
+      </div>
+
+      <!-- Project examples -->
+      <div class="project-row reveal">
+        <div class="proj-name">The New Movement</div>
+        <div class="proj-agency">Obys Agency — 2020</div>
+        <div class="proj-num">(01)</div>
+      </div>
+      <div class="project-row reveal" style="transition-delay:0.1s">
+        <div class="proj-name">CP.fItFL.uF</div>
+        <div class="proj-agency">Obys Agency — 2020</div>
+        <div class="proj-num">(02)</div>
+      </div>
+      <div class="project-row reveal" style="transition-delay:0.2s">
+        <div class="proj-name">B—M—A</div>
+        <div class="proj-agency">Obys Agency — 2020</div>
+        <div class="proj-num">(03)</div>
+      </div>
+
+      <!-- Spec grid -->
+      <div class="spec-grid reveal" style="margin-top:3rem;">
+        <div class="spec-cell">
+          <div class="spec-cell-label">Grid</div>
+          <div class="spec-cell-val">12 Columns</div>
+          <div class="spec-cell-tag">Used</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Grid</div>
+          <div class="spec-cell-val">8 Columns</div>
+          <div class="spec-cell-tag">Used</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Grid</div>
+          <div class="spec-cell-val">10 Columns</div>
+          <div class="spec-cell-tag">Used</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Margins</div>
+          <div class="spec-cell-val">30 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Margins</div>
+          <div class="spec-cell-val">60 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Margins</div>
+          <div class="spec-cell-val">80 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Gutters</div>
+          <div class="spec-cell-val">20 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Gutters</div>
+          <div class="spec-cell-val">30 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Gutters</div>
+          <div class="spec-cell-val">20 px</div>
+        </div>
+      </div>
+
+      <!-- Mock screen -->
+      <div class="mock-screen reveal" style="margin-top:3rem;">
+        <div class="mock-label">1920 × 1080</div>
+        <div style="position:absolute; top:1rem; right:1.2rem; font-size:0.65rem; opacity:0.4;">Grid</div>
+        <div class="mock-cols" style="grid-template-columns:repeat(12,1fr);">
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+          <div class="mock-col-line"></div><div class="mock-col-line"></div>
+        </div>
+      </div>
+
+      <!-- Steps: Set Margins + Set Gutters -->
+      <div style="margin:3rem 0; font-size:0.78rem; opacity:0.5; text-transform:uppercase; letter-spacing:0.1em;" class="reveal">Advices and notes</div>
+      <div class="steps-row reveal">
+        <div class="step-cell">
+          <div class="step-num">(Step 1)</div>
+          <div class="step-name">Set Margins</div>
+          <div class="step-desc">From left and right side of the screen</div>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">(Step 2)</div>
+          <div class="step-name">Set Gutters</div>
+          <div class="step-desc">Space between the columns</div>
+        </div>
+      </div>
+
+      <div class="notes-box reveal">
+        <div class="notes-label">(Notes)</div>
+        <div class="notes-text">
+          (1) You can use a grid <em>without</em> gutters and margins too.
+          (2) You can <em>split the columns</em>, thus making the grid more detailed. For example, make 16 column grid from 8.
+          (3) This grid can <em>be adapted</em> to different screens easily.
+        </div>
+      </div>
+
+      <!-- Paddings system mock -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin:2rem 0;" class="reveal">
+        <div>
+          <div style="font-size:0.7rem; opacity:0.4; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.08em;">Paddings System</div>
+          <div class="mock-screen" style="margin:0;">
+            <div class="mock-label">1920 × 1080</div>
+            <div class="mock-cols" style="grid-template-columns:repeat(8,1fr);">
+              <div class="mock-col-line"></div><div class="mock-col-line"></div>
+              <div class="mock-col-line"></div><div class="mock-col-line"></div>
+              <div class="mock-col-line"></div><div class="mock-col-line"></div>
+              <div class="mock-col-line"></div><div class="mock-col-line"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem; opacity:0.4; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.08em;">Horizontal Grid</div>
+          <div class="mock-screen" style="margin:0; background:#c8c6c0;">
+            <div class="mock-label">1920 × 1080</div>
+            <div style="position:absolute; inset:2.5rem 1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+              <div style="border-top:1px solid rgba(0,0,0,0.3); width:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes-box reveal">
+        <div class="notes-label">(Notes)</div>
+        <div class="notes-text">
+          (1) Use a <em>horizontal grid</em> based on line height.
+          (2) Determine the size of the text style (usually 14–16px), adjust the appropriate line height. It will be your base for the horizontal grid.
+          (3) Choose the <em>font size</em> for <em>other typography</em> fitting on it.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 02: VAN DE GRAAF
+    ══════════════════════════════════════ -->
+    <div class="gs" id="sec-vandeg">
+      <div class="gs-header reveal">
+        <div class="gs-num">02</div>
+        <div class="gs-title">VAN DE<br>GRAAF</div>
+        <div class="gs-about-label">(About grid)</div>
+        <div class="gs-about-text">
+          Van de Graaf Canon based grid or Golden Canon grid. This grid is based on the proportions of the carrier it is applied to. It is good for unusual designs.
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="proj-name">TenTwelve</div>
+        <div class="proj-agency">Obys Agency — 2019</div>
+        <div class="proj-num">(01)</div>
+      </div>
+      <div class="project-row reveal" style="transition-delay:0.1s;">
+        <div class="proj-name">Aeance</div>
+        <div class="proj-agency">Obys Agency — 2019</div>
+        <div class="proj-num">(02)</div>
+      </div>
+
+      <div class="spec-grid reveal" style="margin-top:3rem; grid-template-columns:repeat(4,1fr);">
+        <div class="spec-cell">
+          <div class="spec-cell-label">Grid</div>
+          <div class="spec-cell-val">Golden Canon</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Margins</div>
+          <div class="spec-cell-val">80 px</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Power Lines</div>
+          <div class="spec-cell-val">8</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-cell-label">Used</div>
+          <div class="spec-cell-val">Paddings System</div>
+          <div class="spec-cell-tag">Used</div>
+        </div>
+      </div>
+
+      <div class="mock-screen reveal" style="margin-top:2.5rem; background:#d8d5ce;">
+        <div class="mock-label">1920 × 1080 · Golden Canon</div>
+        <!-- Van De Graaf diagonal lines -->
+        <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.3;" viewBox="0 0 800 450" preserveAspectRatio="none">
+          <line x1="0" y1="0" x2="800" y2="450" stroke="#000" stroke-width="0.8"/>
+          <line x1="800" y1="0" x2="0" y2="450" stroke="#000" stroke-width="0.8"/>
+          <line x1="0" y1="0" x2="0" y2="450" stroke="#000" stroke-width="0.8"/>
+          <line x1="800" y1="0" x2="800" y2="450" stroke="#000" stroke-width="0.8"/>
+          <line x1="0" y1="56" x2="800" y2="56" stroke="#000" stroke-width="0.8"/>
+          <line x1="0" y1="394" x2="800" y2="394" stroke="#000" stroke-width="0.8"/>
+          <line x1="100" y1="0" x2="100" y2="450" stroke="#000" stroke-width="0.8"/>
+          <line x1="700" y1="0" x2="700" y2="450" stroke="#000" stroke-width="0.8"/>
+          <!-- power lines -->
+          <line x1="100" y1="56" x2="700" y2="394" stroke="#000" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="700" y1="56" x2="100" y2="394" stroke="#000" stroke-width="1" stroke-dasharray="4,4"/>
+        </svg>
+      </div>
+
+      <div style="margin:3rem 0 1rem; font-size:0.78rem; opacity:0.5; text-transform:uppercase; letter-spacing:0.1em;" class="reveal">Advices and notes</div>
+      <div class="steps-row reveal">
+        <div class="step-cell">
+          <div class="step-num">(Step 1)</div>
+          <div class="step-name">Diagonals</div>
+          <div class="step-desc">Start from the main diagonals</div>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">(Step 2)</div>
+          <div class="step-name">Main lines</div>
+          <div class="step-desc">Draw lines at the intersection of the diagonals</div>
+        </div>
+      </div>
+
+      <div class="notes-box reveal">
+        <div class="notes-label">(Notes)</div>
+        <div class="notes-text">
+          (1) Draw lines at <em>the intersections</em> until you get 40–100 margins from the edges of the screen.
+          (2) Don't use <em>all grid lines</em>, select some power lines and use them.
+          (3) This grid is very easy to <em>adapt to other screens.</em>
+        </div>
+      </div>
+
+      <div class="notes-box reveal" style="margin-top:1.5rem;">
+        <div class="notes-label">(Notes)</div>
+        <div class="notes-text">
+          (1) Sometimes the grid itself can give you a design decision.
+          (2) Select the <em>power lines</em> on which the blocks are based, they are your grid.
+          (3) Start scaling the design <em>only after</em> selecting the power lines.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 03: RECTANGULAR
+    ══════════════════════════════════════ -->
+    <div class="gs" id="sec-rect">
+      <div class="gs-header reveal">
+        <div class="gs-num">03</div>
+        <div class="gs-title">RECTAN-<br>GULAR</div>
+        <div class="gs-about-label">(About grid)</div>
+        <div class="gs-about-text">
+          Rectangular grid uses fixed-size blocks arranged in a consistent pattern. Perfect for editorial, gallery, and card-based layouts.
+        </div>
+      </div>
+
+      <div class="mock-screen reveal" style="background:#ccc9c1;">
+        <div class="mock-label">1920 × 1080 · Rectangular</div>
+        <div style="position:absolute; inset:2.5rem 1.2rem; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(3,1fr); gap:6px;">
+          <div style="background:rgba(0,0,0,0.12);"></div>
+          <div style="background:rgba(0,0,0,0.18); grid-column:span 2;"></div>
+          <div style="background:rgba(0,0,0,0.12);"></div>
+          <div style="background:rgba(0,0,0,0.22); grid-row:span 2;"></div>
+          <div style="background:rgba(0,0,0,0.1);"></div>
+          <div style="background:rgba(0,0,0,0.15);"></div>
+          <div style="background:rgba(0,0,0,0.08); grid-column:span 2;"></div>
+          <div style="background:rgba(0,0,0,0.18);"></div>
+          <div style="background:rgba(0,0,0,0.1);"></div>
+          <div style="background:rgba(0,0,0,0.2);"></div>
+        </div>
+      </div>
+
+      <div class="steps-row reveal" style="margin-top:2.5rem;">
+        <div class="step-cell">
+          <div class="step-num">(Step 1)</div>
+          <div class="step-name">Define Block Size</div>
+          <div class="step-desc">Start by defining a base rectangular unit that will repeat throughout</div>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">(Step 2)</div>
+          <div class="step-name">Create Rhythm</div>
+          <div class="step-desc">Arrange blocks to create visual flow and clear reading path</div>
+        </div>
+      </div>
+
+      <div class="notes-box reveal">
+        <div class="notes-label">(Notes)</div>
+        <div class="notes-text">
+          (1) The rectangular grid works well for <em>image-heavy layouts.</em>
+          (2) Vary block sizes to create <em>visual hierarchy</em> while maintaining the underlying rhythm.
+          (3) Always align to a consistent <em>base unit</em> (e.g., 8px or 16px).
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 04: OTHERS
+    ══════════════════════════════════════ -->
+    <div class="gs" id="sec-others">
+      <div class="gs-header reveal">
+        <div class="gs-num">04</div>
+        <div class="gs-title">OTHERS</div>
+        <div class="gs-about-label">(About grid)</div>
+        <div class="gs-about-text">
+          Beyond the standard systems — radial grids, modular grids, and custom constructions for unique design problems.
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.6rem;" class="reveal">
+        <div class="mock-screen" style="background:#bfbdb6;">
+          <div class="mock-label">Radial</div>
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;" viewBox="0 0 800 450">
+            <circle cx="400" cy="225" r="60" stroke="#000" stroke-width="1" fill="none"/>
+            <circle cx="400" cy="225" r="120" stroke="#000" stroke-width="1" fill="none"/>
+            <circle cx="400" cy="225" r="180" stroke="#000" stroke-width="1" fill="none"/>
+            <circle cx="400" cy="225" r="240" stroke="#000" stroke-width="1" fill="none"/>
+            <line x1="400" y1="0" x2="400" y2="450" stroke="#000" stroke-width="0.8"/>
+            <line x1="0" y1="225" x2="800" y2="225" stroke="#000" stroke-width="0.8"/>
+            <line x1="231" y1="56" x2="569" y2="394" stroke="#000" stroke-width="0.8"/>
+            <line x1="569" y1="56" x2="231" y2="394" stroke="#000" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="mock-screen" style="background:#c5c2ba;">
+          <div class="mock-label">Modular</div>
+          <div style="position:absolute; inset:2rem 1.2rem; display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(5,1fr); gap:3px;">
+            <div style="background:rgba(0,0,0,0.12); grid-column:span 8;"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+            <div style="background:rgba(0,0,0,0.1);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         CLOSING STATEMENT
+    ══════════════════════════════════════ -->
+    <div class="closing">
+      <div class="closing-text reveal">DON'T BE<br>AFRAID</div>
+      <div class="closing-text reveal" style="transition-delay:0.12s; opacity:0.15;">TO BREAK</div>
+      <div class="closing-text reveal" style="transition-delay:0.24s; font-size:clamp(30px,6vw,90px); margin-top:2rem; opacity:0.5;">THE GRID</div>
+      <div style="margin-top:4rem; font-size:0.85rem; opacity:0.45; max-width:32rem; line-height:1.7;" class="reveal" style="transition-delay:0.4s;">
+        Grids are tools for designers, not rules. The best design work often comes from understanding the system deeply enough to break it intentionally.
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <span>■ GRIDS — Obys Agency ©2021</span>
+      <span>Educational Project</span>
+      <span><a href="https://obys.agency" style="color:inherit; text-decoration:none; opacity:0.7;">obys.agency</a></span>
+    </footer>
+  </div><!-- /content -->
+</div><!-- /wrap -->
+
+<script>
+  // ─── Lerp Smooth Scroll ───
+  const wrap = document.getElementById('content');
+  const spacer = document.getElementById('spacer');
+  let curY = 0, tgtY = 0;
+  const EASE = 0.08;
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function setSpacerHeight() {
+    const h = document.getElementById('content').offsetHeight;
+    spacer.style.height = h + 'px';
+  }
+
+  window.addEventListener('scroll', () => { tgtY = window.scrollY; }, { passive: true });
+
+  // Letter parallax refs
+  const lG  = document.getElementById('l-g');
+  const lR  = document.getElementById('l-r');
+  const lI  = document.getElementById('l-i');
+  const lD  = document.getElementById('l-d');
+  const lS  = document.getElementById('l-s');
+  const lJ  = document.getElementById('l-j');
+  const lU  = document.getElementById('l-u');
+  const lT  = document.getElementById('l-t');
+  const lOo = document.getElementById('l-oo');
+  const lOl = document.getElementById('l-ol');
+  const heroSq   = document.getElementById('hero-sq');
+  const heroGrids= document.getElementById('hero-grids');
+
+  function tick() {
+    curY = lerp(curY, tgtY, EASE);
+    const s = curY;
+    wrap.style.transform = `translateY(${-curY}px)`;
+
+    // Hero GRIDS section parallax
+    if (heroGrids) heroGrids.style.transform = `translateX(${s * 0.04}px)`;
+    if (heroSq)    heroSq.style.transform    = `translateY(${s * 0.06}px)`;
+
+    // Individual letters rotate + translate on scroll
+    const vh = window.innerHeight;
+    const p1 = Math.max(0, (s - vh * 0.8) / vh);
+    const p2 = Math.max(0, (s - vh * 1.6) / vh);
+    const p3 = Math.max(0, (s - vh * 2.6) / vh);
+
+    if (lG)  lG.style.transform  = `rotate(${-8 + p1 * 20}deg) translateX(${-5 + p1 * 8}vw)`;
+    if (lR)  lR.style.transform  = `rotate(${12 - p1 * 18}deg) translateX(${3 - p1 * 5}vw)`;
+    if (lI)  lI.style.transform  = `translateY(${-p1 * 30}px)`;
+    if (lD)  lD.style.transform  = `rotate(${-5 + p1 * 12}deg) translateX(${p1 * 4}vw)`;
+    if (lS)  lS.style.transform  = `rotate(${8 - p1 * 14}deg) translateX(${-p1 * 3}vw)`;
+    if (lJ)  lJ.style.transform  = `translateX(${-2 + p2 * 6}vw)`;
+    if (lU)  lU.style.transform  = `rotate(${6 - p2 * 10}deg) translateX(${p2 * 4}vw)`;
+    if (lT)  lT.style.transform  = `rotate(${-4 + p3 * 8}deg)`;
+    if (lOo) lOo.style.transform = `rotate(${10 - p3 * 15}deg)`;
+    if (lOl) lOl.style.transform = `rotate(${-9 + p3 * 12}deg) translateY(${10 - p3 * 15}%)`;
+
+    // Reveal on scroll
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.88) el.classList.add('in');
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  setSpacerHeight();
+  window.addEventListener('resize', setSpacerHeight);
+  requestAnimationFrame(tick);
+
+  // ─── Grid Toggle ───
+  const gridOverlay = document.getElementById('grid-overlay');
+  function setGrid(on) {
+    gridOverlay.classList.toggle('show', on);
+    document.getElementById('grid-on').classList.toggle('on', on);
+    document.getElementById('grid-off').classList.toggle('on', !on);
+  }
+
+  // ─── Crazy Mode ───
+  function setCrazy(on) {
+    document.body.classList.toggle('crazy', on);
+    document.getElementById('crazy-on').classList.toggle('on', on);
+    document.getElementById('crazy-off').classList.toggle('on', !on);
+  }
+
+  // ─── Custom Cursor ───
+  const cursor = document.getElementById('cursor');
+  let cx = 0, cy = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  document.querySelectorAll('a, button, .tbtn').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+  });
+  (function cursorTick() {
+    cx = lerp(cx, tx, 0.12);
+    cy = lerp(cy, ty, 0.12);
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    requestAnimationFrame(cursorTick);
+  })();
+
+  // ─── Section nav highlight ───
+  const sections = [
+    { id: 'sec-columns', nav: document.querySelector('[data-target="sec-columns"]') },
+    { id: 'sec-vandeg',  nav: document.querySelector('[data-target="sec-vandeg"]') },
+    { id: 'sec-rect',    nav: document.querySelector('[data-target="sec-rect"]') },
+    { id: 'sec-others',  nav: document.querySelector('[data-target="sec-others"]') },
+  ];
+  function updateSectionNav() {
+    const mid = window.innerHeight / 2 + curY;
+    let active = sections[0];
+    sections.forEach(sec => {
+      const el = document.getElementById(sec.id);
+      if (el && el.offsetTop <= mid) active = sec;
+    });
+    sections.forEach(s => s.nav && s.nav.classList.remove('active'));
+    if (active.nav) active.nav.classList.add('active');
+  }
+  setInterval(updateSectionNav, 200);
+
+  // Click on section nav items → scroll to section
+  document.querySelectorAll('.snav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const target = document.getElementById(item.dataset.target);
+      if (target) window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

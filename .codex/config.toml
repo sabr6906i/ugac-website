@@ -1,0 +1,9 @@
+[mcp_servers.magic]
+args = [
+    "-y",
+    "@21st-dev/magic",
+]
+command = "npx"
+
+[mcp_servers.magic.env]
+TWENTY_FIRST_API_KEY = "fcd5dc155b458de8ee6cdf40c83c56495dcf758adf6754e3976b4230d3442c14"

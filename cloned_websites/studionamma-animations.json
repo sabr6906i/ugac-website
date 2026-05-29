@@ -1,0 +1,39 @@
+{
+  "animatedEls": [
+    {
+      "element": "DIV.WhatsAppDots__Dot-sc-5b4c5593-2.dqqATH",
+      "animationName": "fYAlao",
+      "duration": 1200,
+      "easing": "linear",
+      "delay": 0,
+      "iterations": null,
+      "playState": "running"
+    },
+    {
+      "element": "DIV.WhatsAppDots__Dot-sc-5b4c5593-2.dqqzKe",
+      "animationName": "fYAlao",
+      "duration": 1200,
+      "easing": "linear",
+      "delay": 100,
+      "iterations": null,
+      "playState": "running"
+    },
+    {
+      "element": "DIV.WhatsAppDots__Dot-sc-5b4c5593-2.dqqAgp",
+      "animationName": "fYAlao",
+      "duration": 1200,
+      "easing": "linear",
+      "delay": 200,
+      "iterations": null,
+      "playState": "running"
+    }
+  ],
+  "libs": {
+    "gsap": "3.15.0",
+    "ScrollTrigger": true,
+    "lenis": true,
+    "locomotive": false,
+    "swiper": false,
+    "webflow": true
+  }
+}

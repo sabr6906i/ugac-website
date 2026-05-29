@@ -1,0 +1,128 @@
+{
+  "sections": [
+    {
+      "tag": "DIV",
+      "class": "city_wrapper",
+      "text": "PARIS, FRANCE\n11:49:34"
+    },
+    {
+      "tag": "DIV",
+      "class": "city_wrapper is-second",
+      "text": "LOS ANGELES, CA\n02:49:34"
+    },
+    {
+      "tag": "DIV",
+      "class": "city_wrapper is-third",
+      "text": "BARCELONA, SPAIN\n11:49:34"
+    },
+    {
+      "tag": "DIV",
+      "class": "city_wrapper is-fourth",
+      "text": "HONG KONG, CHINA\n17:49:34"
+    },
+    {
+      "tag": "DIV",
+      "class": "city_wrapper is-fifth",
+      "text": "PARIS, FRANCE\n11:49:34"
+    },
+    {
+      "tag": "SECTION",
+      "class": "nav-menu",
+      "text": "HOME\nWORK\nSERVICES\nAPPROACH\n_\nSTUDIO\nPLANS\nNEWS"
+    },
+    {
+      "tag": "SECTION",
+      "class": "section_contact",
+      "text": "CloseCloseLet's worktogetherNameEmailPhoneInterestDesignWebflow developmentFull packageMessageBy clicking on \"Send\", you accept our policy.Thank you! Your submission has been received!Oops! Something went wrong while submitting the form.Thankyou!Continue browsingContinue browsing"
+    },
+    {
+      "tag": "DIV",
+      "class": "contact_radio_wrapper",
+      "text": "DesignWebflow developmentFull package"
+    },
+    {
+      "tag": "DIV",
+      "class": "contact_success_mono_wrapper",
+      "text": "Continue browsingContinue browsing"
+    },
+    {
+      "tag": "DIV",
+      "class": "text-mono_wrapper",
+      "text": "ACCEPT COOKIES"
+    },
+    {
+      "tag": "SECTION",
+      "class": "section_hero overflow-hidden no-cursor",
+      "text": "WE THINK\nCRAFT AND\nDESIGN"
+    },
+    {
+      "tag": "SECTION",
+      "class": "section_home-intro",
+      "text": "CREATIVE STUDIO BUILDING PREMIUM BRANDS\n\nIT’S NEVER “JUST A WEBSITE.”\nEVERY DETAIL MATTERS.\nWE CRAFT DIGITAL EXPERIENCES.\nYOUR DESIGN. OUR OBSESSION.\nYOUR BRAND. OUR PLAYGROUND."
+    },
+    {
+      "tag": "DIV",
+      "class": "home_intro_component",
+      "text": "CREATIVE STUDIO BUILDING PREMIUM BRANDS\n\nIT’S NEVER “JUST A WEBSITE.”\nEVERY DETAIL MATTERS.\nWE CRAFT DIGITAL EXPERIENCES.\nYOUR DESIGN. OUR OBSESSION.\nYOUR BRAND. OUR PLAYGROUND."
+    },
+    {
+      "tag": "DIV",
+      "class": "home_intro_mono_wrapper",
+      "text": "CREATIVE STUDIO BUILDING PREMIUM BRANDS"
+    },
+    {
+      "tag": "DIV",
+      "class": "text-mono_wrapper",
+      "text": "CREATIVE STUDIO BUILDING PREMIUM BRANDS"
+    },
+    {
+      "tag": "P",
+      "class": "home_intro_content",
+      "text": "IT’S NEVER “JUST A WEBSITE.”\nEVERY DETAIL MATTERS.\nWE CRAFT DIGITAL EXPERIENCES.\nYOUR DESIGN. OUR OBSESSION.\nYOUR BRAND. OUR PLAYGROUND."
+    },
+    {
+      "tag": "P",
+      "class": "home_intro_content",
+      "text": "It’s never“just a website”Every detailmatters. We craftdigital experiences.Your design.Our obsession.Your brand.Our playground."
+    },
+    {
+      "tag": "SECTION",
+      "class": "section_latest",
+      "text": "SELECTED PROJECTS\n\nPLAYGROUND"
+    },
+    {
+      "tag": "DIV",
+      "class": "home_latest_heading_wrapper",
+      "text": "SELECTED PROJECTS\n\nPLAYGROUND"
+    },
+    {
+      "tag": "DIV",
+      "class": "home_latest_heading_absolute",
+      "text": "SELECTED PROJECTS"
+    }
+  ],
+  "projects": [],
+  "services": [
+    "SERVICES\nART DIRECTION\nSTORYTELLING\nBRANDING\nIDENTITY\nWEBFLOW\nINTEGRATION\nUI/UX DESIGN\nWIREFRAMES\nGSAP ANIMATIONS\nTRANSITIONS\nADVERTISING\nCREATIVE ADS\nSEO & CONTENT\nRANKING\nSEE ALL",
+    "SERVICES\nART DIRECTION\nSTORYTELLING\nBRANDING\nIDENTITY\nWEBFLOW\nINTEGRATION\nUI/UX DESIGN\nWIREFRAMES\nGSAP ANIMATIONS\nTRANSITIONS\nADVERTISING\nCREATIVE ADS\nSEO & CONTENT\nRANKING\nSEE ALL",
+    "ART DIRECTION\nSTORYTELLING\nBRANDING\nIDENTITY\nWEBFLOW\nINTEGRATION\nUI/UX DESIGN\nWIREFRAMES\nGSAP ANIMATIONS\nTRANSITIONS\nADVERTISING\nCREATIVE ADS\nSEO & CONTENT\nRANKING",
+    "ART DIRECTION\nSTORYTELLING",
+    "ART DIRECTION\nSTORYTELLING",
+    "ART DIRECTION",
+    "STORYTELLING",
+    "BRANDING\nIDENTITY",
+    "BRANDING\nIDENTITY",
+    "BRANDING",
+    "IDENTITY",
+    "WEBFLOW\nINTEGRATION",
+    "WEBFLOW\nINTEGRATION",
+    "WEBFLOW",
+    "INTEGRATION",
+    "UI/UX DESIGN\nWIREFRAMES",
+    "UI/UX DESIGN\nWIREFRAMES",
+    "UI/UX DESIGN",
+    "WIREFRAMES",
+    "GSAP ANIMATIONS\nTRANSITIONS"
+  ],
+  "stats": []
+}
