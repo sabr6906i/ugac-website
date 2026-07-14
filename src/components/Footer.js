@@ -66,26 +66,97 @@ export default function Footer() {
           xmlns="http://www.w3.org/2000/svg"
           style={{ scaleY, transformOrigin: '50% 0%' }}
         >
+          <defs>
+            {/* Animated flowing diagonal gradient */}
+            <linearGradient id="ugac-flow" x1="0%" y1="0%" x2="200%" y2="100%" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#1A3A52">
+                <animate attributeName="stop-color" values="#1A3A52;#2F5E7C;#1E8B8B;#4DB8A8;#1A3A52" dur="6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="25%" stopColor="#2F5E7C">
+                <animate attributeName="stop-color" values="#2F5E7C;#1E8B8B;#4DB8A8;#1A3A52;#2F5E7C" dur="6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="50%" stopColor="#1E8B8B">
+                <animate attributeName="stop-color" values="#1E8B8B;#4DB8A8;#1A3A52;#2F5E7C;#1E8B8B" dur="6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="75%" stopColor="#4DB8A8">
+                <animate attributeName="stop-color" values="#4DB8A8;#1A3A52;#2F5E7C;#1E8B8B;#4DB8A8" dur="6s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="100%" stopColor="#1A3A52">
+                <animate attributeName="stop-color" values="#1A3A52;#2F5E7C;#1E8B8B;#4DB8A8;#1A3A52" dur="6s" repeatCount="indefinite" />
+              </stop>
+              <animateTransform
+                attributeName="gradientTransform"
+                type="translate"
+                values="-1 -0.5; 0 0; 1 0.5; 0 0; -1 -0.5"
+                dur="6s"
+                repeatCount="indefinite"
+              />
+            </linearGradient>
+
+            {/* Sweeping highlight */}
+            <linearGradient id="ugac-sweep" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="40%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="50%" stopColor="rgba(255,255,255,0.25)" />
+              <stop offset="60%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              <animateTransform
+                attributeName="gradientTransform"
+                type="translate"
+                values="-1.5 -1; 1.5 1"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+            </linearGradient>
+
+            {/* Per-letter staggered glow */}
+            <filter id="ugac-glow">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
           {letters.map((letter, idx) => (
-            <motion.text
-              key={letter}
-              x={idx * 242.5}
-              y="260"
-              textLength="242.5"
-              lengthAdjust="spacingAndGlyphs"
-              fontFamily="'Barlow Condensed', sans-serif"
-              fontWeight="600"
-              fontSize="320"
-              letterSpacing="-9"
-              fill={getLetterColor(letter)}
-              onMouseEnter={() => setHoveredLetter(letter)}
-              onMouseLeave={() => setHoveredLetter(null)}
-              animate={{ fill: getLetterColor(letter) }}
-              transition={{ duration: 0.2 }}
-              style={{ cursor: 'pointer' }}
-            >
-              {letter}
-            </motion.text>
+            <g key={letter} filter="url(#ugac-glow)">
+              <motion.text
+                x={idx * 242.5}
+                y="260"
+                textLength="242.5"
+                lengthAdjust="spacingAndGlyphs"
+                fontFamily="'Barlow Condensed', sans-serif"
+                fontWeight="600"
+                fontSize="320"
+                letterSpacing="-9"
+                fill="url(#ugac-flow)"
+                onMouseEnter={() => setHoveredLetter(letter)}
+                onMouseLeave={() => setHoveredLetter(null)}
+                style={{ cursor: 'pointer' }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+              >
+                {letter}
+              </motion.text>
+              <motion.text
+                x={idx * 242.5}
+                y="260"
+                textLength="242.5"
+                lengthAdjust="spacingAndGlyphs"
+                fontFamily="'Barlow Condensed', sans-serif"
+                fontWeight="600"
+                fontSize="320"
+                letterSpacing="-9"
+                fill="url(#ugac-sweep)"
+                style={{ pointerEvents: 'none' }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+              >
+                {letter}
+              </motion.text>
+            </g>
           ))}
         </motion.svg>
       </div>

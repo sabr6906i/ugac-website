@@ -1,77 +1,222 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { clubs } from '../data/clubs';
 
-const LINKS = [
+const HOME_LINKS = [
   { label: 'About', href: '#about' },
-  { label: 'Divisions', href: '#divisions' },
+  { label: 'Divisions', href: '#divisions', dropdown: clubs.map(c => ({ label: c.name, badge: c.badge, href: `/divisions/${c.slug}` })) },
+  { label: 'Resources', href: '/wiki', dropdown: [
+    { label: 'SSS Wiki', href: '/wiki' },
+    { label: 'Calendar', href: '/wiki#calendar' },
+    { label: 'Upcoming Sessions', href: '/wiki#upcoming' },
+    { label: 'Past Archive', href: '/wiki#archive' },
+  ]},
   { label: 'Team', href: '#team' },
   { label: 'Contact', href: '#contact' },
 ];
 
+const WIKI_LINKS = [
+  { label: 'Resources', href: '#wiki-resources' },
+  { label: 'Calendar', href: '#wiki-calendar' },
+  { label: 'Upcoming', href: '#wiki-upcoming' },
+  { label: 'Archive', href: '#wiki-archive' },
+  { label: 'Contact', href: '#wiki-contact' },
+];
+
+function scrollTo(hash) {
+  const id = hash.replace('#', '');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.tagName === 'BUTTON' || el.getAttribute('role') === 'tab') {
+      el.click();
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 80);
+}
+
 export default function Navbar() {
   const [dark, setDark] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const navRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const isWiki = location.pathname === '/wiki';
+  const isHome = location.pathname === '/';
+  const links = isWiki ? WIKI_LINKS : HOME_LINKS;
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
+    const handleOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+    setMobileAccordion(null);
+  }, [location.pathname]);
+
+  const handleDropdownEnter = useCallback((label) => {
+    clearTimeout(timeoutRef.current);
+    setOpenDropdown(label);
+  }, []);
+
+  const handleDropdownLeave = useCallback(() => {
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150);
+  }, []);
+
+  const handleClick = useCallback((href) => {
+    setOpenDropdown(null);
+    if (href.startsWith('#')) {
+      if (isWiki) scrollTo(href);
+      else if (isHome) scrollTo(href);
+      else navigate('/' + href);
+    } else if (href.includes('#') && !href.startsWith('#')) {
+      const [path, hash] = href.split('#');
+      if (location.pathname === path) {
+        scrollTo('#' + hash);
+      } else {
+        navigate(path);
+        setTimeout(() => scrollTo('#' + hash), 300);
+      }
+    } else {
+      navigate(href);
+    }
+    setMobileOpen(false);
+  }, [isHome, isWiki, navigate, location.pathname]);
+
+  const handleCta = useCallback(() => {
+    if (isHome) scrollTo('#contact');
+    else if (isWiki) scrollTo('#wiki-contact');
+    else navigate('/#contact');
+    setMobileOpen(false);
+  }, [isHome, isWiki, navigate]);
 
   return (
     <>
-      <nav className="navbar">
-        <a href="#top" className="nav-logo-link">UGAC</a>
+      <nav className="nav-bar" ref={navRef}>
+        <Link to="/" className="nav-bar-logo">
+          <img src="/ugac-logo.png" alt="UGAC" className="nav-bar-logo-img" />
+        </Link>
 
-        <button className="nav-dark-btn" onClick={() => setDark(d => !d)}>
-          {dark ? 'Light Mode' : 'Dark Mode'}
-        </button>
+        <div className="nav-bar-center">
+          {links.map(l => (
+            <div
+              key={l.label}
+              className="nav-item"
+              onMouseEnter={() => l.dropdown && handleDropdownEnter(l.label)}
+              onMouseLeave={() => l.dropdown && handleDropdownLeave()}
+            >
+              {l.dropdown ? (
+                <>
+                  <button
+                    className={`nav-bar-link ${openDropdown === l.label ? 'nav-bar-link--active' : ''}`}
+                    onClick={() => setOpenDropdown(openDropdown === l.label ? null : l.label)}
+                  >
+                    {l.label}
+                    <svg className={`nav-chevron ${openDropdown === l.label ? 'nav-chevron--open' : ''}`} width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  <div className={`nav-dropdown ${openDropdown === l.label ? 'nav-dropdown--open' : ''}`}>
+                    {l.label === 'Divisions' ? (
+                      <div className="nav-dropdown-grid">
+                        {l.dropdown.map(item => (
+                          <button key={item.href} className="nav-dropdown-item" onClick={() => handleClick(item.href)}>
+                            <span className="nav-dropdown-item-label">{item.label}</span>
+                            <span className="nav-dropdown-item-badge">{item.badge}</span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="nav-dropdown-list">
+                        {l.dropdown.map(item => (
+                          <button key={item.href} className="nav-dropdown-item" onClick={() => handleClick(item.href)}>
+                            <span className="nav-dropdown-item-label">{item.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : l.href.startsWith('#') ? (
+                <button className="nav-bar-link" onClick={() => handleClick(l.href)}>
+                  {l.label}
+                </button>
+              ) : (
+                <Link key={l.label} to={l.href} className="nav-bar-link" onClick={() => window.scrollTo(0, 0)}>
+                  {l.label}
+                </Link>
+              )}
+            </div>
+          ))}
+          <button className="nav-bar-dark" onClick={() => setDark(d => !d)} aria-label="Toggle dark mode">
+            {dark ? '☀' : '☾'}
+          </button>
+        </div>
 
-        <button className="nav-menu-btn" onClick={() => setOpen(true)}>Menu</button>
-
-        <a href="#contact" className="nav-cta">Get Involved!</a>
+        <button className="nav-bar-cta" onClick={handleCta}>Get Involved</button>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="menu-overlay"
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
-          >
-            <button className="menu-close-btn" onClick={() => setOpen(false)}>
-              Close X
-            </button>
+      {/* Mobile */}
+      <button className="nav-hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu">
+        <span className={`nav-hamburger-line ${mobileOpen ? 'nav-hamburger-line--open' : ''}`} />
+        <span className={`nav-hamburger-line ${mobileOpen ? 'nav-hamburger-line--open' : ''}`} />
+      </button>
 
-            <div className="menu-links">
-              {LINKS.map((l, i) => (
-                <motion.a
-                  key={l.label}
-                  href={l.href}
-                  className="menu-link"
-                  onClick={() => setOpen(false)}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <span>{l.label}</span>
-                  <span className="menu-link-arrow">-&gt;</span>
-                </motion.a>
-              ))}
+      <div className={`nav-mobile ${mobileOpen ? 'nav-mobile--open' : ''}`}>
+        <div className="nav-mobile-inner">
+          {links.map(l => (
+            <div key={l.label} className="nav-mobile-group">
+              {l.dropdown ? (
+                <>
+                  <button
+                    className="nav-mobile-link"
+                    onClick={() => setMobileAccordion(mobileAccordion === l.label ? null : l.label)}
+                  >
+                    {l.label}
+                    <svg className={`nav-chevron ${mobileAccordion === l.label ? 'nav-chevron--open' : ''}`} width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  <div className={`nav-mobile-accordion ${mobileAccordion === l.label ? 'nav-mobile-accordion--open' : ''}`}>
+                    {l.dropdown.map(item => (
+                      <button key={item.href} className="nav-mobile-sublink" onClick={() => handleClick(item.href)}>
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : l.href.startsWith('#') ? (
+                <button className="nav-mobile-link" onClick={() => handleClick(l.href)}>
+                  {l.label}
+                </button>
+              ) : (
+                <Link to={l.href} className="nav-mobile-link" onClick={() => setMobileOpen(false)}>
+                  {l.label}
+                </Link>
+              )}
             </div>
-
-            <div className="menu-footer">
-              <span>2025-26 UGAC - IIT Bombay</span>
-              <span>gsecaaug@iitb.ac.in</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+          <div className="nav-mobile-divider" />
+          <button className="nav-mobile-link" onClick={() => setDark(d => !d)}>
+            {dark ? '☀ Light Mode' : '☾ Dark Mode'}
+          </button>
+          <button className="nav-mobile-cta" onClick={handleCta}>Get Involved</button>
+        </div>
+      </div>
     </>
   );
 }
