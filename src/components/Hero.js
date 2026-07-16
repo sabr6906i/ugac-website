@@ -77,6 +77,7 @@ export default function Hero() {
                 src={SLIDES[activeIdx].src}
                 alt=""
                 className="hero-bg-img"
+                decoding="async"
                 initial={KB[activeIdx].from}
                 animate={KB[activeIdx].to}
                 transition={{ duration: 10, ease: 'linear' }}

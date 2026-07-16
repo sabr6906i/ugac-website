@@ -18,7 +18,6 @@
 
 .split-char {
   display: inline-block;
-  will-change: transform, opacity;
 }
 
 .split-space {
@@ -2701,4 +2700,33 @@ body.dark .team-card-link {
   .s-card-extra { display: none; }
   .cal-detail-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
   .wiki-contact { flex-direction: column; align-items: flex-start; gap: 0.25rem; padding: 0.75rem 0.5rem; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE PERFORMANCE  —  disable expensive GPU ops
+═══════════════════════════════════════ */
+@media (pointer: coarse) {
+  /* Kill backdrop-filter blur — #1 mobile GPU killer */
+  .nav-bar,
+  .nav-hamburger,
+  .nav-mobile,
+  .nav-mobile-inner,
+  .nav-dropdown,
+  .team-card-link {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Hero: shorter scroll, no grain, no filter+transform combo */
+  .hero-scroll-container { height: 300vh; }
+  .hero-bg-grain { animation: none !important; display: none; }
+  .hero-bg-img { filter: brightness(0.85); will-change: auto; }
+
+  /* Remove persistent will-change on large text */
+  .div-row-name { will-change: auto; }
+  .sc-card { will-change: auto; }
+  .stext-heading { will-change: auto; }
+
+  /* Reduce team card motion on tab switch */
+  .team-grid { gap: 0.5rem; }
 }

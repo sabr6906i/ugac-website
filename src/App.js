@@ -11,6 +11,7 @@ import Team from './components/Team';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ClubPage from './pages/ClubPage';
+import WikiPage from './pages/WikiPage';
 import Preloader from './components/Preloader';
 const MARQUEE_TEXT = 'ACADEMIC EXCELLENCE — STUDENT LEADERSHIP — IIT BOMBAY — UGAC 2025–26 — STRENGTHENING ACADEMICS — EMPOWERING STUDENTS — ';
 
@@ -18,7 +19,19 @@ export default function App() {
   const cursorRef = useRef(null);
   const [preloaderDone, setPreloaderDone] = useState(false);
 
+  // Scroll to hash on navigation (for cross-route nav links)
   useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash.replace('#', ''));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
     const cursor = cursorRef.current;
     if (!cursor) return;
     let raf;
@@ -31,34 +44,35 @@ export default function App() {
     const tick = () => {
       cx = lerp(cx, tx, 0.14);
       cy = lerp(cy, ty, 0.14);
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
+      cursor.style.transform = `translate(${cx - 5}px, ${cy - 5}px)`;
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
-    const expand = () => cursor.classList.add('big');
-    const shrink = () => cursor.classList.remove('big');
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', expand);
-      el.addEventListener('mouseleave', shrink);
-    });
+    const expand = e => { if (e.target.closest('a, button')) cursor.classList.add('big'); };
+    const shrink = e => { if (e.target.closest('a, button')) cursor.classList.remove('big'); };
+    document.addEventListener('mouseover', expand);
+    document.addEventListener('mouseout', shrink);
 
     return () => {
       document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseover', expand);
+      document.removeEventListener('mouseout', shrink);
       cancelAnimationFrame(raf);
     };
   }, []);
 
   return (
-    <Routes>
-      <Route path="/divisions/:slug" element={<ClubPage />} />
-      <Route path="*" element={
-        <div className="App">
-          {!preloaderDone && <Preloader onDone={() => setPreloaderDone(true)} />}
-          <div id="custom-cursor" ref={cursorRef} />
-          <Navbar />
-          <Hero />
+    <>
+      <div id="custom-cursor" ref={cursorRef} />
+      <Navbar />
+      <Routes>
+        <Route path="/divisions/:slug" element={<ClubPage />} />
+        <Route path="/wiki" element={<WikiPage />} />
+        <Route path="*" element={
+          <div className="App">
+            {!preloaderDone && <Preloader onDone={() => setPreloaderDone(true)} />}
+            <Hero />
 
           {/* Marquee strip */}
           <div className="marquee-strip" aria-hidden="true">
@@ -79,5 +93,6 @@ export default function App() {
         </div>
       } />
     </Routes>
+    </>
   );
 }
