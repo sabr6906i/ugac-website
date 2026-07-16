@@ -4,7 +4,7 @@ import { clubs } from '../data/clubs';
 
 const HOME_LINKS = [
   { label: 'About', href: '#about' },
-  { label: 'Divisions', href: '#divisions', dropdown: clubs.map(c => ({ label: c.name, badge: c.badge, href: `/divisions/${c.slug}` })) },
+  { label: 'Divisions', href: '#divisions', dropdown: clubs.map(c => ({ label: c.name, href: `/divisions/${c.slug}` })) },
   { label: 'Resources', href: '/wiki', dropdown: [
     { label: 'SSS Wiki', href: '/wiki' },
     { label: 'Calendar', href: '/wiki#calendar' },
@@ -37,7 +37,7 @@ function scrollTo(hash) {
 }
 
 export default function Navbar() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState(null);
@@ -136,7 +136,6 @@ export default function Navbar() {
                         {l.dropdown.map(item => (
                           <button key={item.href} className="nav-dropdown-item" onClick={() => handleClick(item.href)}>
                             <span className="nav-dropdown-item-label">{item.label}</span>
-                            <span className="nav-dropdown-item-badge">{item.badge}</span>
                           </button>
                         ))}
                       </div>

@@ -4,24 +4,25 @@ import SplitTextReveal from './SplitTextReveal';
 
 const HERO_BASE = '/images/hero/';
 
-// Save your photos as public/images/hero/1.jpg → 8.jpg in this order:
-// 1 = Foggy aerial sunrise, 2 = Corridor vanishing point, 3 = Overhead cycling road
-// 4 = Empty classroom, 5 = Engineering books, 6 = Sports dome aerial
-// 7 = Powai Lake dusk, 8 = Laptop at night
+// Save your photos as public/images/hero/1.jpg → 12.jpg in this order:
 const SLIDES = [
-  { src: `${HERO_BASE}1.png`, location: 'IIT Bombay', caption: 'Dawn over Powai' },
-  { src: `${HERO_BASE}2.png`, location: 'Main Walkway', caption: 'Spaces of Learning' },
-  { src: `${HERO_BASE}3.png`, location: 'Campus Road', caption: 'Life in Motion' },
+  { src: `${HERO_BASE}10.jpg`, location: 'Sameer Hill', caption: 'A View From Above' },
+  { src: `${HERO_BASE}2.webp`, location: 'Main Walkway', caption: 'Spaces of Learning' },
+  { src: `${HERO_BASE}3.webp`, location: 'Campus Road', caption: 'Life in Motion' },
   { src: `${HERO_BASE}4.png`, location: 'Lecture Hall', caption: 'Knowledge at Core' },
   { src: `${HERO_BASE}5.png`, location: 'Study Desk', caption: 'Deep & Focused' },
   { src: `${HERO_BASE}6.png`, location: 'Sports Complex', caption: 'Built for Excellence' },
   { src: `${HERO_BASE}7.png`, location: 'Powai Lake', caption: 'Evening Reflection' },
   { src: `${HERO_BASE}8.png`, location: 'Night Hours', caption: 'The Last Light On' },
+  { src: `${HERO_BASE}9.jpg`, location: 'Campus Greens', caption: 'Where It All Begins' },
+  { src: `${HERO_BASE}1.jpg`, location: 'IIT Bombay', caption: 'Dawn over Powai' },
+  { src: `${HERO_BASE}11.jpg`, location: 'Sameer Hill', caption: 'The Panorama' },
+  { src: `${HERO_BASE}12.png`, location: 'IIT Bombay', caption: 'A World of Its Own' },
 ];
 
 // Each image gets a unique Ken Burns motion direction
 const KB = [
-  { from: { scale: 1.12, x: '0%',  y: '0%'  }, to: { scale: 1.0,  x: '0%',  y: '0%'  } },
+  { from: { scale: 1.08, x: '0%',  y: '-2%' }, to: { scale: 1.02, x: '2%',  y: '0%'  } },
   { from: { scale: 1.0,  x: '-3%', y: '0%'  }, to: { scale: 1.08, x: '2%',  y: '0%'  } },
   { from: { scale: 1.08, x: '0%',  y: '2%'  }, to: { scale: 1.0,  x: '0%',  y: '-2%' } },
   { from: { scale: 1.0,  x: '2%',  y: '2%'  }, to: { scale: 1.1,  x: '-2%', y: '-2%' } },
@@ -29,6 +30,10 @@ const KB = [
   { from: { scale: 1.0,  x: '3%',  y: '0%'  }, to: { scale: 1.06, x: '-2%', y: '0%'  } },
   { from: { scale: 1.06, x: '0%',  y: '-2%' }, to: { scale: 1.0,  x: '0%',  y: '2%'  } },
   { from: { scale: 1.04, x: '-1%', y: '1%'  }, to: { scale: 1.1,  x: '1%',  y: '-1%' } },
+  { from: { scale: 1.0,  x: '1%',  y: '-1%' }, to: { scale: 1.08, x: '-1%', y: '1%'  } },
+  { from: { scale: 1.12, x: '0%',  y: '0%'  }, to: { scale: 1.0,  x: '0%',  y: '0%'  } },
+  { from: { scale: 1.0,  x: '-2%', y: '1%'  }, to: { scale: 1.1,  x: '1%',  y: '-1%' } },
+  { from: { scale: 1.1,  x: '1%',  y: '0%'  }, to: { scale: 1.0,  x: '-1%', y: '0%'  } },
 ];
 
 const fadeUp = {
