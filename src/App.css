@@ -2680,6 +2680,105 @@ body.dark .team-card-link {
 }
 
 /* ═══════════════════════════════════════
+   CHAT WIDGET  —  Insti-Assist floating bot
+═══════════════════════════════════════ */
+.chat-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s var(--ease-out);
+}
+.chat-fab:hover {
+  box-shadow: 0 6px 28px rgba(0,0,0,0.24), 0 3px 10px rgba(0,0,0,0.14);
+}
+
+.chat-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.15);
+}
+
+.chat-panel {
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  width: 400px;
+  height: 560px;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 1000;
+  background: var(--bg);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.chat-panel-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chat-panel-close {
+  background: none;
+  border: none;
+  color: var(--bg);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.chat-panel-close:hover { opacity: 1; }
+
+.chat-iframe {
+  width: 100%;
+  flex: 1;
+  border: none;
+}
+
+/* Mobile: full-screen panel */
+@media (max-width: 600px) {
+  .chat-panel {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  .chat-fab {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ═══════════════════════════════════════
    MOBILE PERFORMANCE  —  disable expensive GPU ops
 ═══════════════════════════════════════ */
 @media (pointer: coarse) {

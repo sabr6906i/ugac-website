@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import ClubPage from './pages/ClubPage';
 import WikiPage from './pages/WikiPage';
 import Preloader from './components/Preloader';
+import ChatWidget from './components/ChatWidget';
 const MARQUEE_TEXT = 'ACADEMIC EXCELLENCE — STUDENT LEADERSHIP — IIT BOMBAY — UGAC 2025–26 — STRENGTHENING ACADEMICS — EMPOWERING STUDENTS — ';
 
 export default function App() {
@@ -93,6 +94,7 @@ export default function App() {
         </div>
       } />
     </Routes>
+    <ChatWidget />
     </>
   );
 }
