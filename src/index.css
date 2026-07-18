@@ -10,9 +10,11 @@
   --fg-subtle: rgba(26,35,50,0.15);
   --border: rgba(26,35,50,0.1);
   --accent-blue: #1a56f0;
-  --nav-bg: rgba(26,35,50,0.75);
+  --nav-bg: #e8ecf0;
+  --nav-text: #1a2332;
+  --nav-text-rgb: 26,35,50;
   --nav-bg-dark: rgba(15,22,32,0.85);
-  --dropdown-bg: rgba(26,35,50,0.92);
+  --dropdown-bg: #e8ecf0;
   --dropdown-bg-dark: rgba(15,22,32,0.95);
   --overlay: rgba(26,35,50,0.55);
   --overlay-dark: rgba(15,22,32,0.6);
@@ -59,6 +61,8 @@ body.dark {
   --fg-subtle: rgba(224,230,237,0.14);
   --border: rgba(224,230,237,0.08);
   --nav-bg: rgba(15,22,32,0.85);
+  --nav-text: #e0dbd4;
+  --nav-text-rgb: 224,219,212;
   --nav-bg-dark: rgba(15,22,32,0.9);
   --dropdown-bg: rgba(15,22,32,0.95);
   --dropdown-bg-dark: rgba(24,32,48,0.95);
