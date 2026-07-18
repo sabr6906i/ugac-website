@@ -1,195 +1,171 @@
 import { motion } from 'framer-motion';
 
-const ORBIT_ITEMS = [
-  { label: 'Courses', angle: 0,   radius: 110, delay: 0.3,  speed: 18, icon: 'book' },
-  { label: 'Deadlines', angle: 45,  radius: 125, delay: 0.5,  speed: 22, icon: 'clock' },
-  { label: 'Exams', angle: 90,  radius: 100, delay: 0.7,  speed: 16, icon: 'pen' },
-  { label: 'Research', angle: 135, radius: 130, delay: 0.9,  speed: 25, icon: 'flask' },
-  { label: 'Events', angle: 180, radius: 115, delay: 1.1,  speed: 20, icon: 'calendar' },
-  { label: 'Code', angle: 225, radius: 120, delay: 0.6,  speed: 19, icon: 'code' },
-  { label: 'Grades', angle: 270, radius: 105, delay: 0.8,  speed: 17, icon: 'chart' },
-  { label: 'Clubs', angle: 315, radius: 135, delay: 1.0,  speed: 23, icon: 'star' },
+const CARDS = [
+  { label: 'SYLLABUS', angle: 30,  dist: 140, delay: 0.3, dur: 5.5, size: 'sm' },
+  { label: 'DEADLINES', angle: 90,  dist: 155, delay: 0.5, dur: 6.2, size: 'md' },
+  { label: 'CREDITS', angle: 160, dist: 130, delay: 0.7, dur: 5.0, size: 'sm' },
+  { label: 'RESEARCH', angle: 220, dist: 148, delay: 0.4, dur: 6.8, size: 'md' },
+  { label: 'EXAMS', angle: 310, dist: 138, delay: 0.6, dur: 5.8, size: 'sm' },
 ];
 
-const QMARKS = [
-  { x: -28, y: -72, delay: 1.2, scale: 0.9 },
-  { x: 12,  y: -80, delay: 1.5, scale: 1.1 },
-  { x: -8,  y: -65, delay: 1.8, scale: 0.75 },
-  { x: 30,  y: -68, delay: 2.0, scale: 0.6 },
-];
-
-function OrbitIcon({ type }) {
-  const s = 18;
-  const color = 'var(--fg-muted)';
-  switch (type) {
-    case 'book':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-        </svg>
-      );
-    case 'clock':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 6v6l4 2" />
-        </svg>
-      );
-    case 'pen':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 20h9" />
-          <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
-        </svg>
-      );
-    case 'flask':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 3h6" />
-          <path d="M10 3v6.5L4 20h16l-6-10.5V3" />
-        </svg>
-      );
-    case 'calendar':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <path d="M16 2v4M8 2v4M3 10h18" />
-        </svg>
-      );
-    case 'code':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-        </svg>
-      );
-    case 'chart':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 20V10M12 20V4M6 20v-6" />
-        </svg>
-      );
-    case 'star':
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
+const SIZES = { sm: { w: 64, h: 28 }, md: { w: 72, h: 30 } };
 
 export default function ConfusedStudent() {
   return (
     <div className="cs-section">
       <div className="cs-scene">
-        {/* Student figure */}
+
+        {/* Radial glow behind student */}
+        <motion.div
+          className="cs-glow"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Student SVG */}
         <motion.svg
           className="cs-student"
-          viewBox="0 0 120 180"
-          initial={{ opacity: 0, y: 20 }}
+          viewBox="0 0 100 160"
+          fill="none"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Head */}
-          <circle cx="60" cy="38" r="22" fill="var(--fg)" />
-          {/* Eyes — two dots looking left/right */}
+          <circle cx="50" cy="32" r="18" fill="var(--fg)" />
+          {/* Hair tuft */}
+          <path d="M36 22 Q42 8 50 14 Q58 8 64 22" fill="var(--fg)" />
+
+          {/* Eyes — looking side to side */}
           <motion.g
-            animate={{ x: [-2, 2, -2] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <circle cx="52" cy="36" r="2.5" fill="var(--bg)" />
-            <circle cx="68" cy="36" r="2.5" fill="var(--bg)" />
-          </motion.g>
-          {/* Slight head tilt */}
-          <motion.g
-            animate={{ rotate: [-3, 3, -3] }}
+            animate={{ x: [-1.5, 1.5, -1.5] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ transformOrigin: '60px 60px' }}
           >
-            {/* Body */}
-            <rect x="40" y="62" width="40" height="55" rx="6" fill="var(--fg)" />
-            {/* Arms */}
-            <motion.g
-              animate={{ rotate: [-5, 8, -5] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ transformOrigin: '40px 72px' }}
-            >
-              <rect x="22" y="66" width="18" height="8" rx="4" fill="var(--fg)" />
-            </motion.g>
-            <motion.g
-              animate={{ rotate: [5, -8, 5] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-              style={{ transformOrigin: '80px 72px' }}
-            >
-              <rect x="80" y="66" width="18" height="8" rx="4" fill="var(--fg)" />
-            </motion.g>
-            {/* Laptop on lap */}
-            <rect x="32" y="117" width="56" height="6" rx="2" fill="var(--fg-muted)" />
-            <rect x="36" y="105" width="48" height="14" rx="3" fill="var(--fg-subtle)" stroke="var(--fg-muted)" strokeWidth="0.8" />
-            {/* Laptop screen glow */}
-            <rect x="40" y="108" width="40" height="8" rx="1.5" fill="var(--accent-blue)" opacity="0.15" />
-            {/* Legs */}
-            <rect x="42" y="123" width="14" height="40" rx="5" fill="var(--fg)" />
-            <rect x="64" y="123" width="14" height="40" rx="5" fill="var(--fg)" />
-            {/* Shoes */}
-            <rect x="38" y="158" width="22" height="8" rx="4" fill="var(--fg)" />
-            <rect x="60" y="158" width="22" height="8" rx="4" fill="var(--fg)" />
+            <ellipse cx="43" cy="31" rx="2" ry="2.2" fill="var(--bg)" />
+            <ellipse cx="57" cy="31" rx="2" ry="2.2" fill="var(--bg)" />
           </motion.g>
-          {/* Question marks above head */}
-          {QMARKS.map((q, i) => (
-            <motion.text
-              key={i}
-              x={60 + q.x}
-              y={38 + q.y}
-              textAnchor="middle"
-              fill="var(--accent-blue)"
-              fontSize={14 * q.scale}
-              fontWeight="700"
-              fontFamily="var(--font-display)"
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: [0, 0.8, 0.4, 0.8], y: [8, -4, 0, -4] }}
-              viewport={{ once: true }}
-              transition={{ duration: 3, repeat: Infinity, delay: q.delay, ease: 'easeInOut' }}
-            >
-              ?
-            </motion.text>
-          ))}
+
+          {/* Eyebrows — worried */}
+          <motion.g
+            animate={{ y: [0, -1.5, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+          >
+            <path d="M38 25 Q43 22 48 25" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.6" />
+            <path d="M52 25 Q57 22 62 25" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.6" />
+          </motion.g>
+
+          {/* Mouth — small frown */}
+          <path d="M44 40 Q50 37 56 40" stroke="var(--bg)" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5" />
+
+          {/* Neck */}
+          <rect x="45" y="50" width="10" height="8" rx="3" fill="var(--fg)" />
+
+          {/* Body — smooth shape */}
+          <path
+            d="M30 58 Q30 54 38 54 L62 54 Q70 54 70 58 L72 105 Q72 110 66 110 L34 110 Q28 110 28 105 Z"
+            fill="var(--fg)"
+          />
+
+          {/* Left arm — raised in confusion */}
+          <motion.g
+            animate={{ rotate: [-3, 6, -3] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: '30px 62px' }}
+          >
+            <path d="M30 62 Q16 68 12 58 Q10 52 16 50" stroke="var(--fg)" strokeWidth="8" strokeLinecap="round" fill="none" />
+          </motion.g>
+
+          {/* Right arm — scratching head */}
+          <motion.g
+            animate={{ rotate: [2, -5, 2] }}
+            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+            style={{ transformOrigin: '70px 62px' }}
+          >
+            <path d="M70 62 Q82 56 78 44 Q76 38 68 40" stroke="var(--fg)" strokeWidth="8" strokeLinecap="round" fill="none" />
+          </motion.g>
+
+          {/* Laptop */}
+          <rect x="28" y="108" width="44" height="4" rx="2" fill="var(--fg-muted)" />
+          <rect x="32" y="98" width="36" height="12" rx="3" fill="var(--fg-subtle)" stroke="var(--fg-muted)" strokeWidth="0.7" />
+          <motion.rect
+            x="36" y="100" width="28" height="7" rx="1.5"
+            fill="var(--accent-blue)"
+            animate={{ opacity: [0.08, 0.18, 0.08] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          />
+
+          {/* Legs */}
+          <rect x="34" y="114" width="12" height="32" rx="5" fill="var(--fg)" />
+          <rect x="54" y="114" width="12" height="32" rx="5" fill="var(--fg)" />
+
+          {/* Feet */}
+          <rect x="30" y="142" width="20" height="7" rx="3.5" fill="var(--fg)" />
+          <rect x="50" y="142" width="20" height="7" rx="3.5" fill="var(--fg)" />
         </motion.svg>
 
-        {/* Orbiting elements */}
-        {ORBIT_ITEMS.map((item, i) => {
-          const rad = (item.angle * Math.PI) / 180;
-          const cx = Math.cos(rad) * item.radius;
-          const cy = Math.sin(rad) * item.radius * 0.55;
+        {/* Floating question marks */}
+        <motion.span
+          className="cs-qmark cs-qmark--1"
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.0 }}
+        >
+          <motion.span
+            animate={{ y: [0, -6, 0], rotate: [0, 8, -8, 0] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+          >?</motion.span>
+        </motion.span>
+
+        <motion.span
+          className="cs-qmark cs-qmark--2"
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.3 }}
+        >
+          <motion.span
+            animate={{ y: [0, -5, 0], rotate: [0, -6, 6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          >?</motion.span>
+        </motion.span>
+
+        <motion.span
+          className="cs-qmark cs-qmark--3"
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.6 }}
+        >
+          <motion.span
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          >?</motion.span>
+        </motion.span>
+
+        {/* Orbiting thought cards — use CSS keyframes for smooth circular orbit */}
+        {CARDS.map((card, i) => {
+          const rad = (card.angle * Math.PI) / 180;
+          const sz = SIZES[card.size];
           return (
             <motion.div
               key={i}
-              className="cs-orbit-item"
-              initial={{ opacity: 0, scale: 0.3 }}
+              className="cs-card"
+              style={{
+                width: sz.w,
+                height: sz.h,
+                '--orbit-x': `${Math.cos(rad) * card.dist}px`,
+                '--orbit-y': `${Math.sin(rad) * card.dist * 0.5}px`,
+                animationDuration: `${card.dur}s`,
+                animationDelay: `${card.delay}s`,
+              }}
+              initial={{ opacity: 0, scale: 0.5 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: item.delay, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: card.delay + 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.div
-                className="cs-orbit-float"
-                animate={{
-                  x: [cx - 10, cx + 10, cx - 10],
-                  y: [cy - 8, cy + 8, cy - 8],
-                  rotate: [0, 8, -8, 0],
-                }}
-                transition={{
-                  duration: item.speed * 0.15,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: item.delay,
-                }}
-              >
-                <OrbitIcon type={item.icon} />
-                <span className="cs-orbit-label">{item.label}</span>
-              </motion.div>
+              {card.label}
             </motion.div>
           );
         })}

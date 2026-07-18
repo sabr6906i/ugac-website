@@ -780,48 +780,99 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
 
 .cs-scene {
   position: relative;
-  width: 340px;
-  height: 280px;
+  width: 380px;
+  height: 300px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
+/* ── Radial glow ── */
+.cs-glow {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+  opacity: 0.12;
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+/* ── Student figure ── */
 .cs-student {
-  width: 100px;
+  width: 90px;
   height: auto;
   position: relative;
   z-index: 2;
 }
 
-.cs-orbit-item {
+/* ── Question marks ── */
+.cs-qmark {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--accent-blue);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 3;
+}
+.cs-qmark--1 {
+  top: 8%;
+  left: 38%;
+  font-size: 1.8rem;
+}
+.cs-qmark--2 {
+  top: 2%;
+  left: 54%;
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+.cs-qmark--3 {
+  top: 12%;
+  left: 60%;
+  font-size: 0.85rem;
+  opacity: 0.4;
+}
+
+/* ── Floating thought cards ── */
+.cs-card {
   position: absolute;
   top: 50%;
   left: 50%;
+  margin-top: calc(var(--orbit-y) - 15px);
+  margin-left: calc(var(--orbit-x) - 32px);
   z-index: 1;
-}
-
-.cs-orbit-float {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-}
-
-.cs-orbit-label {
+  justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.1em;
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--fg-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   white-space: nowrap;
+  pointer-events: none;
+  animation: cs-orbit-float ease-in-out infinite alternate;
+}
+
+@keyframes cs-orbit-float {
+  0%   { transform: translate(calc(var(--orbit-x) * -0.12), calc(var(--orbit-y) * -0.12)); }
+  100% { transform: translate(calc(var(--orbit-x) * 0.12),  calc(var(--orbit-y) * 0.12));  }
 }
 
 @media (max-width: 600px) {
   .cs-scene {
-    width: 280px;
-    height: 240px;
-    transform: scale(0.85);
+    width: 300px;
+    height: 260px;
+    transform: scale(0.82);
   }
 }
 
