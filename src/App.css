@@ -2718,7 +2718,7 @@ body.dark .team-card-link {
   width: 400px;
   height: 620px;
   border-radius: 16px;
-  overflow: auto;
+  overflow: hidden;
   z-index: 1000;
   background: var(--bg);
   box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
@@ -2733,6 +2733,7 @@ body.dark .team-card-link {
   padding: 0.75rem 1rem;
   background: var(--fg);
   color: var(--bg);
+  flex-shrink: 0;
 }
 
 .chat-panel-title {
@@ -2759,7 +2760,6 @@ body.dark .team-card-link {
   width: 100%;
   flex: 1;
   border: none;
-  zoom: 0.75;
 }
 
 /* Mobile: full-screen panel */
