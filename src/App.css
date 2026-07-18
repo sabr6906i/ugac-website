@@ -770,23 +770,19 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
 }
 
 /* ═══════════════════════════════════════
-   CONFUSED STUDENT  —  Standalone section below Hero
+   CONFUSED STUDENT  —  Inline in about statement
 ═══════════════════════════════════════ */
-.cs-section {
-  padding: 3rem 0;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: center;
-}
-
-.cs-about {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cs-inline {
+  position: absolute;
+  right: clamp(1rem, 5vw, 4rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .cs-svg {
-  width: clamp(140px, 16vw, 200px);
+  width: clamp(100px, 14vw, 180px);
   height: auto;
 }
 
