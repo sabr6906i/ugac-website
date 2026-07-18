@@ -769,6 +769,62 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
   background: var(--bg-card);
 }
 
+/* ═══════════════════════════════════════
+   CONFUSED STUDENT  —  Animated illustration
+═══════════════════════════════════════ */
+.cs-section {
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cs-scene {
+  position: relative;
+  width: 340px;
+  height: 280px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cs-student {
+  width: 100px;
+  height: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cs-orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+}
+
+.cs-orbit-float {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cs-orbit-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .cs-scene {
+    width: 280px;
+    height: 240px;
+    transform: scale(0.85);
+  }
+}
+
 .about-bottom {
   display: grid;
   grid-template-columns: 1fr 1fr;

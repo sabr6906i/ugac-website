@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import HoverPostStatement from './HoverPostStatement';
+import ConfusedStudent from './ConfusedStudent';
 
 const PILLARS = [
   { label: 'Academic Excellence', num: '01' },
@@ -16,6 +17,8 @@ export default function About() {
       </div>
 
       <HoverPostStatement />
+
+      <ConfusedStudent />
 
       <div className="about-bottom">
         <motion.p
