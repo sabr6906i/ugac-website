@@ -56,7 +56,8 @@
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
   border-bottom: 1px solid rgba(var(--nav-text-rgb),0.08);
   box-shadow: 0 1px 0 rgba(var(--nav-text-rgb),0.03);
-  transition: left 0.35s var(--ease-out),
+  transition: top 0.35s var(--ease-out),
+              left 0.35s var(--ease-out),
               right 0.35s var(--ease-out),
               border-radius 0.35s var(--ease-out),
               height 0.35s var(--ease-out),
@@ -70,6 +71,7 @@ body.dark .nav-bar {
 }
 
 .nav-bar--scrolled {
+  top: 0.6rem;
   left: 1rem;
   right: 1rem;
   border-radius: 14px;
@@ -1662,7 +1664,7 @@ body.dark .team-card-link {
   :root { --nav-h: 48px; }
   .nav-bar-center { display: none; }
   .nav-bar-cta { display: none; }
-  .nav-bar--scrolled { left: 0; right: 0; border-radius: 0; height: var(--nav-h); box-shadow: none; }
+  .nav-bar--scrolled { top: 0; left: 0; right: 0; border-radius: 0; height: var(--nav-h); box-shadow: none; }
   .nav-hamburger { display: flex; }
 }
 
