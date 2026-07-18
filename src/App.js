@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import ClubPage from './pages/ClubPage';
 import WikiPage from './pages/WikiPage';
 import Preloader from './components/Preloader';
+import ConfusedStudent from './components/ConfusedStudent';
 const MARQUEE_TEXT = 'ACADEMIC EXCELLENCE — STUDENT LEADERSHIP — IIT BOMBAY — UGAC 2025–26 — STRENGTHENING ACADEMICS — EMPOWERING STUDENTS — ';
 
 export default function App() {
@@ -73,6 +74,7 @@ export default function App() {
           <div className="App">
             {!preloaderDone && <Preloader onDone={() => setPreloaderDone(true)} />}
             <Hero />
+            <ConfusedStudent />
 
           {/* Marquee strip */}
           <div className="marquee-strip" aria-hidden="true">

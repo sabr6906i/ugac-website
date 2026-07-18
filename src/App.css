@@ -770,32 +770,33 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
 }
 
 /* ═══════════════════════════════════════
-   CONFUSED STUDENT  —  UGAC hoodie illustration
+   CONFUSED STUDENT  —  Standalone section below Hero
 ═══════════════════════════════════════ */
+.cs-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+}
+
 .cs-about {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
 }
 
 .cs-svg {
-  width: clamp(160px, 18vw, 220px);
+  width: clamp(140px, 16vw, 200px);
   height: auto;
 }
 
 .about-bottom {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
   padding: 3rem 1.75rem 0;
   border-top: 1px solid var(--border);
   margin-top: 3.5rem;
-  align-items: end;
-}
-
-.about-text-col {
-  display: flex;
-  flex-direction: column;
 }
 .about-body {
   font-size: 0.92rem;
@@ -1664,7 +1665,6 @@ body.dark .team-card-link {
   .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
   .hero-slideshow-frame { aspect-ratio: 16 / 10; }
   .about-bottom { grid-template-columns: 1fr; }
-  .cs-about { display: none; }
   .about-post-float {
     left: 70vw;
   }
