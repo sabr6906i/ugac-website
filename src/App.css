@@ -2759,6 +2759,7 @@ body.dark .team-card-link {
   width: 100%;
   flex: 1;
   border: none;
+  zoom: 0.75;
 }
 
 /* Mobile: full-screen panel */
