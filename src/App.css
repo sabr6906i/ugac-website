@@ -71,11 +71,11 @@ body.dark .nav-bar {
 }
 
 .nav-bar--scrolled {
-  top: 0.6rem;
-  left: 1rem;
-  right: 1rem;
-  border-radius: 14px;
-  height: 38px;
+  top: 0.5rem;
+  left: 2rem;
+  right: 2rem;
+  border-radius: 12px;
+  height: 34px;
   border-bottom: none;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
 }
