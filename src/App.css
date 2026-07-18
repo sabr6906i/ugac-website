@@ -2716,9 +2716,9 @@ body.dark .team-card-link {
   bottom: 6rem;
   right: 2rem;
   width: 400px;
-  height: 560px;
+  height: 620px;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: auto;
   z-index: 1000;
   background: var(--bg);
   box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
@@ -2759,7 +2759,6 @@ body.dark .team-card-link {
   width: 100%;
   flex: 1;
   border: none;
-  zoom: 0.75;
 }
 
 /* Mobile: full-screen panel */
