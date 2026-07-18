@@ -75,7 +75,7 @@ export default function Team() {
             >
               <div className="team-card-photo">
                 {m.img
-                  ? <img src={m.img} alt={m.name} className="team-card-img" />
+                  ? <img src={m.img} alt={m.name} className="team-card-img" loading="lazy" decoding="async" />
                   : <span className="team-card-initials">{initials(m.name)}</span>
                 }
                 <div className="team-card-overlay">

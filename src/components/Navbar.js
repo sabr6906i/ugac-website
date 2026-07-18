@@ -38,6 +38,7 @@ function scrollTo(hash) {
 
 export default function Navbar() {
   const [dark, setDark] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState(null);
@@ -52,6 +53,13 @@ export default function Navbar() {
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const handleOutside = (e) => {
@@ -106,7 +114,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="nav-bar" ref={navRef}>
+      <nav className={`nav-bar${scrolled ? ' nav-bar--scrolled' : ''}`} ref={navRef}>
         <Link to="/" className="nav-bar-logo">
           <img src="/ugac-logo.png" alt="UGAC" className="nav-bar-logo-img" />
         </Link>

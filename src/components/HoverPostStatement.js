@@ -105,6 +105,20 @@ function FloatingPosts({ active }) {
   );
 }
 
+function StudentIllustration() {
+  return (
+    <div className="cs-vid">
+      <video
+        src="/videos/student-animation.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+    </div>
+  );
+}
+
 export default function HoverPostStatement() {
   const [active, setActive] = useState(null);
 
@@ -121,6 +135,7 @@ export default function HoverPostStatement() {
       }}
     >
       <FloatingPosts active={active} />
+      <StudentIllustration />
 
       <motion.span className="about-hover-line" variants={lineVariants}>
         It's never <span className="muted">"just a </span>

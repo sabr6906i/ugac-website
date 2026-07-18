@@ -506,3 +506,237 @@ def save_logo(name, x1, y1, x2, y2, tolerance=230):
 **Key lesson:** After cropping cells in a grid, there can be 1–2px bleed from adjacent
 logos. Use numpy to detect non-white content columns/rows and set crop boundaries to
 where actual content starts — don't just divide by column count.
+
+---
+
+## 10. Tabbed Page with Search + Pagination (Wiki/SSS Page)
+
+A reusable pattern for content-heavy pages that replaces long-scroll sections with tab-based navigation.
+
+### Structure
+```jsx
+<Tabs>       → sticky tab bar, justify-content: center
+<Panel>      → AnimatePresence mode="wait" switches content
+  <Search>   → live filter input
+  <List>     → paginated session cards
+  <Pagination> → prev / page numbers / next
+</Panel>
+```
+
+### Search (Live Filter)
+```jsx
+function matchesSearch(session, query) {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return (
+    session.course.toLowerCase().includes(q) ||
+    session.name.toLowerCase().includes(q) ||
+    session.takers.some(t => t.name.toLowerCase().includes(q)) ||
+    session.tags.some(tag => tag.toLowerCase().includes(q)) ||
+    session.desc.toLowerCase().includes(q)
+  );
+}
+```
+- Runs on every keystroke via `useMemo` over the full list
+- `setPage(1)` on every search change to reset pagination
+
+### Pagination
+```jsx
+const PAGE_SIZE = 4;
+const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+```
+- Prev/Next buttons with `:disabled` state
+- Numbered buttons with `.wiki-page-btn--active` class
+- Container: `justify-content: center`, `border-top` separator
+
+### Connecting Nav Links to Tabs
+Each tab button gets `id="wiki-{key}"`. The navbar `scrollTo()` function detects `<button>` elements and calls `.click()` instead of `scrollIntoView`:
+```js
+function scrollTo(hash) {
+  const id = hash.replace('#', '');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.tagName === 'BUTTON' || el.getAttribute('role') === 'tab') {
+      el.click();              // ← switches tab
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });  // ← scrolls to section
+    }
+  }, 80);
+}
+```
+
+---
+
+## 11. Calendar with Multiple Sessions Per Day
+
+### Display
+- First course code shown on date cell
+- `+N` badge for additional sessions
+- Course code uses `text-overflow: ellipsis` for long names
+
+```jsx
+const codes = daySessions.map(s => s.course);
+const extra = codes.length > 1 ? codes.length - 1 : 0;
+
+<button className="cal-cell">
+  <span className="cal-num">{d}</span>
+  <div className="cal-codes-wrap">
+    <span className="cal-codes">{codes[0]}</span>
+    {extra > 0 && <span className="cal-extra">+{extra}</span>}
+  </div>
+</button>
+```
+
+```css
+.cal-codes-wrap { display: flex; align-items: center; gap: 2px; max-width: 100%; }
+.cal-codes { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.cal-extra { font-size: 0.4rem; padding: 1px 3px; border-radius: 2px; background: var(--bg-card); flex-shrink: 0; }
+```
+
+### Selected + Today States
+```css
+.cal-cell--sel { background: var(--fg) !important; }
+.cal-cell--sel .cal-num { color: var(--bg); }
+.cal-cell--sel .cal-codes { color: rgba(240,239,234,0.7); }
+.cal-cell--sel .cal-extra { color: rgba(240,239,234,0.5); background: rgba(240,239,234,0.12); }
+.cal-cell--today .cal-num { box-shadow: inset 0 0 0 1.5px var(--fg); border-radius: 50%; }
+```
+
+---
+
+## 12. Grid with Unfilled Cells — Avoiding Grey Patches
+
+**Problem:** A 2-column grid with 5 items leaves an empty cell showing `var(--border)` background.
+
+**Solution:** Replace `gap: 1px + background: var(--border)` with individual item borders.
+
+```css
+/* ❌ Bad — empty cell shows grey */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+
+/* ✅ Good — empty cell is white because grid bg is var(--bg) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-bottom: none;
+}
+.item {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.item:nth-child(even) { border-right: none; }
+.item:nth-last-child(-n+2) { border-bottom: none; }
+```
+
+Works for any column count. The `:nth-child(even)` removes right border from 2nd column, and `:nth-last-child(-n+2)` removes bottom border from the last row.
+
+---
+
+## 13. Responsive Sizing Strategy with `clamp()`
+
+Every visible text size uses `clamp(min, preferred, max)` to scale with viewport.
+
+### Formula
+```css
+/*             min size   preferred (vw)   max size  */
+font-size: clamp(0.82rem, 0.95vw,     0.95rem);
+```
+
+### Typical values
+| Element | clamp |
+|---------|-------|
+| Hero title | `clamp(3rem, 8vw, 7rem)` |
+| Section title | `clamp(2.5rem, 6vw, 5rem)` |
+| Card name | `clamp(1.1rem, 1.8vw, 1.45rem)` |
+| Body text | `clamp(0.85rem, 0.95vw, 0.95rem)` |
+| Tab label | `clamp(0.62rem, 0.75vw, 0.78rem)` |
+| Calendar num | `clamp(0.85rem, 1vw, 1.05rem)` |
+| Status pill | `clamp(0.55rem, 0.6vw, 0.62rem)` |
+| Calendar codes | `clamp(0.48rem, 0.6vw, 0.65rem)` |
+
+### Counter-example (avoid)
+```css
+/* ❌ Too small on desktop, doesn't scale */
+font-size: 0.82rem;
+
+/* ✅ Scales from 0.82rem on mobile to 0.95rem on desktop */
+font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+```
+
+**Rule:** Never use bare `rem` for visible text. Always use `clamp()`.
+
+---
+
+## 14. Card Hover Fill Animation (Studio Namma style)
+
+A `::before` pseudo-element slides in from the top on hover and reverses on mouse leave.
+
+```css
+.card {
+  position: relative;
+  background: var(--bg);
+  transition: background 0.2s;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--bg-card);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s var(--ease-out);
+}
+.card:hover::before,
+.card--open::before { transform: scaleY(1); }
+.card:hover,
+.card--open { background: transparent; }  /* let pseudo-element show through */
+
+/* All content sits above the pseudo-element */
+.card-top { position: relative; z-index: 1; }
+.card-body { position: relative; z-index: 1; }
+```
+
+### Why `transform-origin: top` instead of bottom?
+Growing from top feels more natural for a list of cards — each card reveals downward as you hover, and the card below it is visually "pushed" by the expanding fill.
+
+---
+
+## 15. Navbar — 3 Separate Floating Elements (Lesse Studio style)
+
+Three independent fixed-position elements that float above the page:
+
+| Element | Position | Background |
+|---------|----------|------------|
+| `.nav-logo` | `top: 0.75rem; left: 1.25rem` | `rgba(13,13,12,0.5)`, `backdrop-filter: blur(10px)` |
+| `.nav-fill` | `top: 0.75rem; left: 50%; transform: translateX(-50%)` | `rgba(13,13,12,0.85)`, `backdrop-filter: blur(16px)` |
+| `.nav-cta-fab` | `top: 0.75rem; right: 1.25rem` | `#f0efea` (white) |
+
+### Contextual Links
+Links change based on the route. On the Wiki page, the nav shows tab-related links:
+```jsx
+const HOME_LINKS = [
+  { label: 'About', href: '#about' },
+  { label: 'Divisions', href: '#divisions' },
+  { label: 'Team', href: '#team' },
+  { label: 'Contact', href: '#contact' },
+  { label: 'SSS Wiki', href: '/wiki' },
+];
+
+const WIKI_LINKS = [
+  { label: 'Resources', href: '#wiki-resources' },
+  { label: 'Calendar', href: '#wiki-calendar' },
+  { label: 'Upcoming', href: '#wiki-upcoming' },
+  { label: 'Archive', href: '#wiki-archive' },
+  { label: 'Contact', href: '#wiki-contact' },
+];
+```
+
+### No hamburger menu
+All links are always visible inline. On mobile (≤900px), `.nav-cta-fab` is hidden, `.nav-logo` becomes a solid bar on the left, and `.nav-fill` shifts to the right with scrollable links.

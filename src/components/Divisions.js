@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { clubs as divisions } from '../data/clubs';
@@ -16,7 +16,6 @@ const lerp = (a, b, t) => a + (b - a) * t;
 
 export default function Divisions() {
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(null);
   const [hovered, setHovered]   = useState(null);
   const [frontIdx, setFrontIdx] = useState(0);
   const intervalRef = useRef(null);
