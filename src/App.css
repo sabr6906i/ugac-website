@@ -71,13 +71,13 @@ body.dark .nav-bar {
 }
 
 .nav-bar--scrolled {
-  top: 0.5rem;
-  left: 2rem;
-  right: 2rem;
-  border-radius: 12px;
-  height: 42px;
-  border-bottom: none;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
+	top: 0.5rem;
+	left: 9rem;
+	right: 9rem;
+	border-radius: 12px;
+	height: 42px;
+	border-bottom: none;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
 }
 
 body.dark .nav-bar--scrolled {
@@ -770,20 +770,25 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
 }
 
 /* ═══════════════════════════════════════
-   CONFUSED STUDENT  —  Inline in about statement
+   STUDENT VIDEO  —  inline in about statement
 ═══════════════════════════════════════ */
-.cs-inline {
-  position: absolute;
-  right: clamp(1rem, 5vw, 4rem);
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1;
-  pointer-events: none;
+.cs-vid {
+	position: absolute;
+	right: clamp(1rem, 5vw, 4rem);
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	pointer-events: none;
+	width: clamp(167px, 37vw, 306px);
+	aspect-ratio: 0.8;
+	border-radius: 14px;
+	overflow: hidden;
 }
 
-.cs-svg {
-  width: clamp(100px, 14vw, 180px);
-  height: auto;
+.cs-vid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .about-bottom {
