@@ -770,119 +770,32 @@ body.dark .btn-primary:hover { background: transparent; color: #e0e6ed; }
 }
 
 /* ═══════════════════════════════════════
-   CONFUSED STUDENT  —  Animated illustration
+   CONFUSED STUDENT  —  UGAC hoodie illustration
 ═══════════════════════════════════════ */
-.cs-section {
-  padding: 3rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.cs-scene {
-  position: relative;
-  width: 380px;
-  height: 300px;
+.cs-about {
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
-/* ── Radial glow ── */
-.cs-glow {
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
-  opacity: 0.12;
-  pointer-events: none;
-  filter: blur(30px);
-}
-
-/* ── Student figure ── */
-.cs-student {
-  width: 90px;
+.cs-svg {
+  width: clamp(160px, 18vw, 220px);
   height: auto;
-  position: relative;
-  z-index: 2;
-}
-
-/* ── Question marks ── */
-.cs-qmark {
-  position: absolute;
-  font-family: var(--font-display);
-  font-weight: 900;
-  color: var(--accent-blue);
-  line-height: 1;
-  pointer-events: none;
-  z-index: 3;
-}
-.cs-qmark--1 {
-  top: 8%;
-  left: 38%;
-  font-size: 1.8rem;
-}
-.cs-qmark--2 {
-  top: 2%;
-  left: 54%;
-  font-size: 1.2rem;
-  opacity: 0.6;
-}
-.cs-qmark--3 {
-  top: 12%;
-  left: 60%;
-  font-size: 0.85rem;
-  opacity: 0.4;
-}
-
-/* ── Floating thought cards ── */
-.cs-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: calc(var(--orbit-y) - 15px);
-  margin-left: calc(var(--orbit-x) - 32px);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  white-space: nowrap;
-  pointer-events: none;
-  animation: cs-orbit-float ease-in-out infinite alternate;
-}
-
-@keyframes cs-orbit-float {
-  0%   { transform: translate(calc(var(--orbit-x) * -0.12), calc(var(--orbit-y) * -0.12)); }
-  100% { transform: translate(calc(var(--orbit-x) * 0.12),  calc(var(--orbit-y) * 0.12));  }
-}
-
-@media (max-width: 600px) {
-  .cs-scene {
-    width: 300px;
-    height: 260px;
-    transform: scale(0.82);
-  }
 }
 
 .about-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 2rem;
   padding: 3rem 1.75rem 0;
   border-top: 1px solid var(--border);
   margin-top: 3.5rem;
+  align-items: end;
+}
+
+.about-text-col {
+  display: flex;
+  flex-direction: column;
 }
 .about-body {
   font-size: 0.92rem;
@@ -1309,7 +1222,7 @@ body.dark .partners-marquee-logo {
 .stats-section-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(3rem, 8vw, 4rem);
   line-height: 0.88;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -1440,7 +1353,7 @@ body.dark .partners-marquee-logo {
 .team-headline-big {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   line-height: 0.92;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -1449,7 +1362,7 @@ body.dark .partners-marquee-logo {
 .team-headline-small {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-size: clamp(2rem, 4.5vw, 3rem);
   line-height: 0.95;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -1458,7 +1371,7 @@ body.dark .partners-marquee-logo {
 .team-headline-accent {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
   line-height: 0.88;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -1470,7 +1383,7 @@ body.dark .partners-marquee-logo {
 .team-headline-year {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
   letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -1751,6 +1664,7 @@ body.dark .team-card-link {
   .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
   .hero-slideshow-frame { aspect-ratio: 16 / 10; }
   .about-bottom { grid-template-columns: 1fr; }
+  .cs-about { display: none; }
   .about-post-float {
     left: 70vw;
   }
