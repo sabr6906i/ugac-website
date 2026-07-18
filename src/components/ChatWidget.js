@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const BOT_URL = 'https://insti-assist-tau.vercel.app/';
+const BOT_URL = 'https://insti-assist-tau.vercel.app/?guest=true';
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
