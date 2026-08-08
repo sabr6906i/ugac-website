@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import SplitTextReveal from './SplitTextReveal';
+import HoverPostStatement from './HoverPostStatement';
 
 function Counter({ to, suffix = '' }) {
   const ref = useRef(null);
@@ -35,23 +36,27 @@ export default function Stats() {
         <SplitTextReveal as="h2" className="stats-section-title" text="We Are UGAC" />
       </div>
 
-      <div className="stats-grid">
-        {stats.map((s, i) => (
-          <motion.div
-            key={s.label}
-            className="stat-item"
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="stat-num">
-              <Counter to={s.num} suffix={s.suffix} />
-            </div>
-            <div className="stat-label">{s.label}</div>
-            <div className="stat-sub">{s.sub}</div>
-          </motion.div>
-        ))}
+      <div className="stats-inner">
+        <HoverPostStatement />
+
+        <div className="stats-grid">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              className="stat-item"
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="stat-num">
+                <Counter to={s.num} suffix={s.suffix} />
+              </div>
+              <div className="stat-label">{s.label}</div>
+              <div className="stat-sub">{s.sub}</div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

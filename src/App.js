@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/Features';
 import Divisions from './components/Divisions';
 import Stats from './components/Stats';
 import Partners from './components/Partners';
@@ -84,7 +83,6 @@ export default function App() {
             </div>
           </div>
 
-          <About />
           <Divisions />
           <Partners />
           <Stats />

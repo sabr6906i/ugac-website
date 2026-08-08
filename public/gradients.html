@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UGAC Gradient Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #edece8; font-family: 'Barlow Condensed', sans-serif; padding: 3rem 2rem; color: #0d0d0c; }
+h1 { font-size: 3rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+h2 { font-size: 0.75rem; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(13,13,12,0.42); margin-bottom: 1rem; }
+p { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(13,13,12,0.5); margin-bottom: 2rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+.card { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+.swatch { height: 200px; }
+.info { background: #fff; padding: 1rem 1.25rem; }
+.info .name { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+.info .code { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: rgba(13,13,12,0.42); margin-top: 0.25rem; }
+.colors { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.color-dot { width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid rgba(13,13,12,0.1); }
+</style>
+</head>
+<body>
+
+<h1>UGAC Gradient Palette</h1>
+<p>#1A3A52 → #2F5E7C → #1E8B8B → #4DB8A8</p>
+
+<div class="grid">
+
+  <!-- 1. Diagonal 4-color -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #1A3A52 0%, #2F5E7C 33%, #1E8B8B 66%, #4DB8A8 100%);"></div>
+    <div class="info">
+      <div class="name">Diagonal 4-Color</div>
+      <div class="code">135deg · U → G → A → C</div>
+      <div class="colors">
+        <span class="color-dot" style="background:#1A3A52"></span>
+        <span class="color-dot" style="background:#2F5E7C"></span>
+        <span class="color-dot" style="background:#1E8B8B"></span>
+        <span class="color-dot" style="background:#4DB8A8"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Navy to Mint diagonal -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #1A3A52 0%, #4DB8A8 100%);"></div>
+    <div class="info">
+      <div class="name">Navy → Mint</div>
+      <div class="code">135deg · U → C</div>
+      <div class="colors">
+        <span class="color-dot" style="background:#1A3A52"></span>
+        <span class="color-dot" style="background:#4DB8A8"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Steel to Teal diagonal -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #2F5E7C 0%, #1E8B8B 100%);"></div>
+    <div class="info">
+      <div class="name">Steel → Teal</div>
+      <div class="code">135deg · G → A</div>
+      <div class="colors">
+        <span class="color-dot" style="background:#2F5E7C"></span>
+        <span class="color-dot" style="background:#1E8B8B"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Dark diagonal with all 4 -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #0d0d0c 0%, #1A3A52 30%, #2F5E7C 60%, #4DB8A8 100%);"></div>
+    <div class="info">
+      <div class="name">Dark → Light</div>
+      <div class="code">135deg · Black → Navy → Steel → Mint</div>
+      <div class="colors">
+        <span class="color-dot" style="background:#0d0d0c"></span>
+        <span class="color-dot" style="background:#1A3A52"></span>
+        <span class="color-dot" style="background:#2F5E7C"></span>
+        <span class="color-dot" style="background:#4DB8A8"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Horizontal sweep -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(90deg, #1A3A52 0%, #2F5E7C 33%, #1E8B8B 66%, #4DB8A8 100%);"></div>
+    <div class="info">
+      <div class="name">Horizontal 4-Color</div>
+      <div class="code">90deg · Full spectrum sweep</div>
+      <div class="colors">
+        <span class="color-dot" style="background:#1A3A52"></span>
+        <span class="color-dot" style="background:#2F5E7C"></span>
+        <span class="color-dot" style="background:#1E8B8B"></span>
+        <span class="color-dot" style="background:#4DB8A8"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Subtle transparent diagonal -->
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, rgba(26,58,82,0.6) 0%, rgba(77,184,168,0.3) 100%), #edece8;"></div>
+    <div class="info">
+      <div class="name">Subtle Overlay</div>
+      <div class="code">135deg · Semi-transparent over page bg</div>
+      <div class="colors">
+        <span class="color-dot" style="background:rgba(26,58,82,0.6)"></span>
+        <span class="color-dot" style="background:rgba(77,184,168,0.3)"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<h2 style="margin-top:2rem">Usage Ideas</h2>
+<div class="grid">
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #1A3A52 0%, #4DB8A8 100%); display:flex; align-items:center; justify-content:center;">
+      <span style="font-family:'Barlow Condensed'; font-weight:900; font-size:3rem; color:rgba(255,255,255,0.9); text-transform:uppercase; letter-spacing:-0.02em;">UGAC</span>
+    </div>
+    <div class="info">
+      <div class="name">Navbar / Logo background</div>
+      <div class="code">Diagonal gradient behind UGAC logo</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #1A3A52 0%, #1E8B8B 50%, #4DB8A8 100%); display:flex; align-items:flex-end; padding:1.5rem;">
+      <span style="font-family:'Barlow Condensed'; font-weight:900; font-size:clamp(2rem,5vw,3.5rem); color:rgba(255,255,255,0.9); text-transform:uppercase; line-height:0.88;">Hero<br>Headline</span>
+    </div>
+    <div class="info">
+      <div class="name">Hero Section Accent</div>
+      <div class="code">3-color diagonal behind hero text</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #1A3A52 0%, #2F5E7C 100%); display:flex; align-items:flex-start; padding:1.5rem; gap:0.5rem; flex-wrap:wrap;">
+      <span style="font-family:'Space Mono'; font-size:0.55rem; color:rgba(255,255,255,0.7); text-transform:uppercase; background:rgba(255,255,255,0.15); padding:0.2rem 0.5rem; border-radius:999px;">Academic</span>
+      <span style="font-family:'Space Mono'; font-size:0.55rem; color:rgba(255,255,255,0.7); text-transform:uppercase; background:rgba(255,255,255,0.15); padding:0.2rem 0.5rem; border-radius:999px;">Excellence</span>
+      <span style="font-family:'Space Mono'; font-size:0.55rem; color:rgba(255,255,255,0.7); text-transform:uppercase; background:rgba(255,255,255,0.15); padding:0.2rem 0.5rem; border-radius:999px;">Leadership</span>
+    </div>
+    <div class="info">
+      <div class="name">Footer / Section Divider</div>
+      <div class="code">Deep navy gradient with chip overlay</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
