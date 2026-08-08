@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import SplitTextReveal from './SplitTextReveal';
-import HoverPostStatement from './HoverPostStatement';
 
 function Counter({ to, suffix = '' }) {
   const ref = useRef(null);
@@ -37,8 +36,6 @@ export default function Stats() {
       </div>
 
       <div className="stats-inner">
-        <HoverPostStatement />
-
         <div className="stats-grid">
           {stats.map((s, i) => (
             <motion.div
@@ -57,6 +54,23 @@ export default function Stats() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          className="stats-student"
+          initial={{ opacity: 0, x: 32 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <video
+            src="/videos/student-animation.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="stats-student-video"
+          />
+        </motion.div>
       </div>
     </section>
   );
